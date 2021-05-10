@@ -7,7 +7,7 @@ is currently **in maintanance mode** and there are **no plans for further develo
 You're welcome to submit bug issues and improvement PRs. 
 Please be aware that feature requests most likely be denied, unless they can really impress me :).
 
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.crashinvaders.lml/gdx-lml?label=SNAPSHOT&server=https%3A%2F%2Fs01.oss.sonatype.org&style=for-the-badge)
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.crashinvaders.lml/gdx-lml?server=https%3A%2F%2Fs01.oss.sonatype.org&label=snapshot&style=for-the-badge)](https://s01.oss.sonatype.org/#nexus-search;quick~com.crashinvaders.lml)
 
 # LibGDX utilities
 This repository contains various LibGDX extensions covering various features such as dependency injection, GUI building, networking and general utilities.
