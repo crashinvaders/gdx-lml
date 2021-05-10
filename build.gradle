@@ -26,7 +26,9 @@ allprojects {
   }
 }
 
-subprojects {
+def libModules = subprojects - project(':autumn:natives') - project(':websocket:natives')
+
+configure(libModules) {
   apply plugin: 'java-library'
   apply plugin: 'maven'
   apply plugin: 'signing'
@@ -154,7 +156,7 @@ task publishAll {
   group 'gdx-lml'
   description 'Publish all the Maven artifacts to the public repos.'
 
-  subprojects.forEach {project ->
+  libModules.forEach {project ->
     dependsOn project.build
     dependsOn project.uploadArchives
   }
@@ -165,7 +167,7 @@ task publishAllSnapshots {
   description 'Publish all the Maven artifacts to the public repos.' +
           'This task will only be execute if the current version is a snapshot.'
 
-  subprojects.forEach {project ->
+  libModules.forEach {project ->
     dependsOn project.build
     dependsOn project.uploadSnapshotArchives
   }
@@ -175,7 +177,7 @@ task installAll {
   group 'gdx-lml'
   description 'Installes all the Maven artifacts to the local Maven repo.'
 
-  subprojects.forEach {project ->
+  libModules.forEach {project ->
     dependsOn project.build
     dependsOn project.install
   }
@@ -191,7 +193,7 @@ distributions {
   main {
     baseName = libVersion
     contents {
-      project.subprojects.each { sub ->
+      libModules.each { sub ->
         into('lib') {
           from sub.jar
         }
