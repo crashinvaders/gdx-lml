@@ -1,8 +1,8 @@
 # Disclaimer
 
 This is a fork of the archived [gdx-lml](https://github.com/czyzby/gdx-lml) project.
-It's meant to be a **compatibility maintained version of the old library** 
-(with the latest LibGDX) and there are **no plans for further development**.
+It's meant to be **compatible with the latest LibGDX version**
+it's **in maintanance mode** and there are **no plans for further development**.
 
 You're welcome to submit bug issues and improvement PRs. 
 Please be aware that feature requests most likely be denied, unless they can really impress me :).
