@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.kiwi.util.gdx.collection.pooled.PooledList;
 import com.github.czyzby.lml.util.LmlUtilities;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** This is a LML internal utility actor container. It extends {@link Actor} class, but not
  * {@link com.badlogic.gdx.scenes.scene2d.Group Group}. While it contains multiple actors, it does not display them in

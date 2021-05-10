@@ -23,7 +23,7 @@ import com.github.czyzby.lml.parser.action.ActorConsumer;
 import com.github.czyzby.lml.parser.action.StageAttacher;
 import com.github.czyzby.lml.parser.tag.LmlAttribute;
 import com.github.czyzby.lml.parser.tag.LmlTag;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Utility class. Contains common LML methods that might be useful during parsing or even LML actors usage.
  *

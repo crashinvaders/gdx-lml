@@ -11,7 +11,7 @@ import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.tag.LmlActorBuilder;
 import com.github.czyzby.lml.parser.tag.LmlTag;
 import com.github.czyzby.lml.util.LmlUtilities;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Common base for all tag handlers.
  *

@@ -10,7 +10,7 @@ import com.github.czyzby.kiwi.util.common.Exceptions;
 import com.github.czyzby.kiwi.util.gdx.reflection.Reflection;
 import com.github.czyzby.lml.annotation.LmlAction;
 import com.github.czyzby.lml.util.Lml;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Wraps around an {@link ActionContainer}, providing access to its methods and fields. Mostly for internal parsing
  * use.

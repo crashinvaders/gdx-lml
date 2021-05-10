@@ -23,7 +23,7 @@ import com.github.czyzby.lml.parser.impl.annotation.processor.SelectBoxOnChangeP
 import com.github.czyzby.lml.parser.impl.annotation.processor.SelectBoxSingleItemOnChangeProcessor;
 import com.github.czyzby.lml.parser.impl.annotation.processor.TextFieldOnChangeProcessor;
 import com.github.czyzby.lml.util.LmlUtilities;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Uses ignore-case maps to store LML parser arguments, i18n bundles, preferences, tooltip managers, actor consumers
  * and action containers. Provides Skin instance and registered on change processors.

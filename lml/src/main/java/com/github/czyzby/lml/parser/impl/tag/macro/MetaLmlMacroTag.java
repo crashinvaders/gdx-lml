@@ -13,7 +13,7 @@ import com.github.czyzby.lml.parser.impl.tag.AbstractMacroLmlTag;
 import com.github.czyzby.lml.parser.tag.LmlTag;
 import com.github.czyzby.lml.parser.tag.LmlTagProvider;
 import com.github.czyzby.lml.util.LmlUtilities;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Meta macro tag allows to create custom macros from within LML templates. It basically modifies LML syntax to include
  * new macro tags, parsed from the data it receives. First attribute is an LML array of macro aliases. The second

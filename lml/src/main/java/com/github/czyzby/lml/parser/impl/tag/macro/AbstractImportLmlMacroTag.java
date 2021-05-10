@@ -7,7 +7,7 @@ import com.github.czyzby.kiwi.util.gdx.collection.GdxMaps;
 import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.impl.tag.AbstractMacroLmlTag;
 import com.github.czyzby.lml.parser.tag.LmlTag;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Import macros are used to read other templates and append their content into the currently passed template. There
  * are two ways to invoke the macros:

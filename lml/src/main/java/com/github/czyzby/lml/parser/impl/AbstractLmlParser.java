@@ -42,7 +42,7 @@ import com.github.czyzby.lml.parser.impl.action.MethodActorConsumer;
 import com.github.czyzby.lml.util.Lml;
 import com.github.czyzby.lml.util.LmlParsingException;
 import com.github.czyzby.lml.util.LmlUtilities;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Abstract base for all LML parsers. Manages required getters and setters. Allows to focus on the actual parsing
  * implementation by providing abstract method {@link #parseTemplate()} and implementing all specific parsing methods

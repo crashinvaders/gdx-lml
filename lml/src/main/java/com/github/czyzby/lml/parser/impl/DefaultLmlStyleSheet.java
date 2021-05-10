@@ -3,7 +3,7 @@ package com.github.czyzby.lml.parser.impl;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxMaps;
 import com.github.czyzby.lml.parser.LmlStyleSheet;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Default implementation of {@link LmlStyleSheet}. Ignores case of tags and attributes.
  *

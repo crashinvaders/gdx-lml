@@ -11,7 +11,7 @@ import com.github.czyzby.lml.parser.tag.LmlActorBuilder;
 import com.github.czyzby.lml.parser.tag.LmlAttribute;
 import com.github.czyzby.lml.parser.tag.LmlBuildingAttribute;
 import com.github.czyzby.lml.parser.tag.LmlTagProvider;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** This is a semi-abstract class that implements all {@link LmlSyntax} methods. Returns standard (default) values for
  * all markers. Implements internal mechanisms of storing tag and attribute providers, but registers none: while this

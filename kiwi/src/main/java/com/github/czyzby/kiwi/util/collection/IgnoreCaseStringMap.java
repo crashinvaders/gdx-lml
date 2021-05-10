@@ -1,4 +1,4 @@
-package com.github.czyzby.lml.util.collection;
+package com.github.czyzby.kiwi.util.collection;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.github.czyzby.kiwi.util.common.Strings;

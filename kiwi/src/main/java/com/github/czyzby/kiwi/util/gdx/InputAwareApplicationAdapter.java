@@ -69,7 +69,7 @@ public class InputAwareApplicationAdapter implements ApplicationListener, InputP
     }
 
     @Override
-    public boolean scrolled(final int amount) {
+    public boolean scrolled(float amountX, float amountY) {
         return false;
     }
 }

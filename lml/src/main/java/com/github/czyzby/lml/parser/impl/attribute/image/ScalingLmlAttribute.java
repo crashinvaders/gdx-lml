@@ -2,7 +2,7 @@ package com.github.czyzby.lml.parser.impl.attribute.image;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
-import com.github.czyzby.kiwi.util.common.Exceptions;
+import com.github.czyzby.kiwi.util.common.ScalingUtilities;
 import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.tag.LmlAttribute;
 import com.github.czyzby.lml.parser.tag.LmlTag;
@@ -23,19 +23,9 @@ public class ScalingLmlAttribute implements LmlAttribute<Image> {
     }
 
     private static Scaling parseScaling(final LmlParser parser, final String parsedData) {
-        try {
-            final Scaling scaling = Scaling.valueOf(parsedData);
-            if (scaling != null) {
-                return scaling;
-            }
-        } catch (final Exception exception) {
-            Exceptions.ignore(exception); // Somewhat expected. Invalid name.
-        }
-        for (final Scaling scaling : Scaling.values()) {
-            if (parsedData.equalsIgnoreCase(scaling.name())) {
-                return scaling;
-            }
-        }
+        final Scaling scaling = ScalingUtilities.resolveScaling(parsedData, null);
+        if (scaling != null) return scaling;
+
         parser.throwErrorIfStrict("Unable to find Scaling enum constant with name: " + parsedData);
         return Scaling.stretch;
     }

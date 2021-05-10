@@ -5,7 +5,7 @@ import com.github.czyzby.kiwi.util.common.Strings;
 import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.parser.impl.tag.AbstractMacroLmlTag;
 import com.github.czyzby.lml.parser.tag.LmlTag;
-import com.github.czyzby.lml.util.collection.IgnoreCaseStringMap;
+import com.github.czyzby.kiwi.util.collection.IgnoreCaseStringMap;
 
 /** Abstract base for loop and iteration-based macros.
  *
