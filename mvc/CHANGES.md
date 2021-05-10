@@ -15,7 +15,7 @@ Newest change logs are in the `README.md` file.
 - Added `InterfaceService#setActionOnBundlesReload(Runnable)`, allowing to specify an action executed each time registered `I18NBundle` objects are loaded.
 - Now `@ViewDialog` can also support `Window` child. This is meant to be more flexible when it comes to custom `Dialog` implementations (like `VisDialog` in `VisUI`, which does not extend `Dialog` class).
 - `InterfaceService#initiateAllControllers()` now also initiates dialog controllers (those with dialog instance caching turned on). This might be an overlooked method, but it generally should be called after assets are loaded to greatly speed up screen transitions on platforms that have a hard time reading files and creating views as fast as regular desktop applications (GWT).
-- Android class scanner implemented in [Autumn Android](http://github.com/czyzby/gdx-autumn-android).
+- Android class scanner implemented in [Autumn Android](http://github.com/crashinvaders/gdx-autumn-android).
 
 1.1 -> 1.2:
 

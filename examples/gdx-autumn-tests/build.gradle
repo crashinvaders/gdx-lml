@@ -29,7 +29,7 @@ project(":desktop") {
 
     dependencies {
         compile project(":core")
-        compile "com.github.czyzby:gdx-autumn-fcs:$libVersion"
+        compile "com.crashinvaders.lml:gdx-autumn-fcs:$libVersion"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
@@ -44,10 +44,10 @@ project(":html") {
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        compile "com.github.czyzby:gdx-kiwi:$libVersion:sources"
-        compile "com.github.czyzby:gdx-autumn:$libVersion:sources"
-        compile "com.github.czyzby:gdx-autumn-gwt:$libVersion"
-        compile "com.github.czyzby:gdx-autumn-gwt:$libVersion:sources"
+        compile "com.crashinvaders.lml:gdx-kiwi:$libVersion:sources"
+        compile "com.crashinvaders.lml:gdx-autumn:$libVersion:sources"
+        compile "com.crashinvaders.lml:gdx-autumn-gwt:$libVersion"
+        compile "com.crashinvaders.lml:gdx-autumn-gwt:$libVersion:sources"
     }
 }
 
@@ -56,7 +56,7 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.github.czyzby:gdx-autumn:$libVersion"
+        compile "com.crashinvaders.lml:gdx-autumn:$libVersion"
     }
 }
 

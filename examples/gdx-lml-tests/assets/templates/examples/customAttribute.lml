@@ -6,7 +6,7 @@
     attribute that supports Actor.class, so it is available
     for all tags. -->
 
-<textButton href="https://github.com/czyzby/gdx-lml">
+<textButton href="https://github.com/crashinvaders/gdx-lml">
     Show repository.
 </textButton>
 

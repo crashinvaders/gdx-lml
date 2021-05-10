@@ -3,6 +3,10 @@ ext {
 }
 
 dependencies {
-  compile "com.github.czyzby:gdx-kiwi:$libVersion"
+  compile "com.crashinvaders.lml:gdx-kiwi:$libVersion"
+
+  // Even so we forked LML to maintain it entirely, there seem to be no need
+  // in forking archived uedi-api repo (https://github.com/crashinvaders/uedi)
+  // as it's standalone header kinda lib.
   compile "com.github.czyzby:uedi-api:$uediVersion"
 }

@@ -30,7 +30,7 @@ project(":desktop") {
 
     dependencies {
         compile project(":core")
-        compile "com.github.czyzby:gdx-websocket-common:$libVersion"
+        compile "com.crashinvaders.lml:gdx-websocket-common:$libVersion"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
@@ -42,9 +42,9 @@ project(":html") {
 
     dependencies {
         compile project(":core")
-        compile "com.github.czyzby:gdx-websocket:$libVersion:sources"
-        compile "com.github.czyzby:gdx-websocket-gwt:$libVersion"
-        compile "com.github.czyzby:gdx-websocket-gwt:$libVersion:sources"
+        compile "com.crashinvaders.lml:gdx-websocket:$libVersion:sources"
+        compile "com.crashinvaders.lml:gdx-websocket-gwt:$libVersion"
+        compile "com.crashinvaders.lml:gdx-websocket-gwt:$libVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
@@ -57,7 +57,7 @@ project(":core") {
     dependencies {
         compile project(":shared")
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.github.czyzby:gdx-websocket:$libVersion"
+        compile "com.crashinvaders.lml:gdx-websocket:$libVersion"
     }
 }
 
@@ -65,7 +65,7 @@ project(":shared") {
     apply plugin: "java"
 
     dependencies {
-        compile "com.github.czyzby:gdx-websocket:$libVersion"
+        compile "com.crashinvaders.lml:gdx-websocket:$libVersion"
     }
 }
 

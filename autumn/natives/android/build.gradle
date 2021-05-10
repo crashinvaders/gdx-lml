@@ -5,5 +5,5 @@ ext {
 dependencies {
   provided "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
   provided "com.google.android:android:$androidVersion"
-  compile "com.github.czyzby:gdx-autumn:$libVersion"
+  compile "com.crashinvaders.lml:gdx-autumn:$libVersion"
 }

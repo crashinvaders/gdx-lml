@@ -1,4 +1,4 @@
 dependencies {
-  compile "com.github.czyzby:gdx-autumn:$libVersion"
-  compile "com.github.czyzby:gdx-lml:$libVersion"
+  compile "com.crashinvaders.lml:gdx-autumn:$libVersion"
+  compile "com.crashinvaders.lml:gdx-lml:$libVersion"
 }

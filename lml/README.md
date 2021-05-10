@@ -7,7 +7,7 @@ See [gdx-lml-tests](../examples/gdx-lml-tests) for example uses of all available
 Check it out [on-line](http://czyzby.github.io/gdx-lml/lml).
 
 ### Documentation
-See [LibGDX forum thread](http://www.badlogicgames.com/forum/viewtopic.php?f=17&t=18843), [example project](../examples/gdx-lml-tests), [tutorial](https://github.com/czyzby/gdx-lml/wiki/LibGDX-Markup-Language) and [DTD schema section](dtd).
+See [LibGDX forum thread](http://www.badlogicgames.com/forum/viewtopic.php?f=17&t=18843), [example project](../examples/gdx-lml-tests), [tutorial](https://github.com/crashinvaders/gdx-lml/wiki/LibGDX-Markup-Language) and [DTD schema section](dtd).
 
 ## Extensions
 [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) syntax support is available through [gdx-lml-vis library](../lml-vis). Additionally to replacing standard Scene2D actors with improved VisUI widgets, it offers full support for other VisUI features - including color picker, file chooser, other new widgets, listeners and validators.
@@ -20,7 +20,7 @@ Check it out [on-line](http://czyzby.github.io/gdx-lml/lml-vis).
 
 To import LML with `Gradle`, add this dependency to your core project:
 ```
-        compile "com.github.czyzby:gdx-lml:$libVersion.$gdxVersion"
+        compile "com.crashinvaders.lml:gdx-lml:$libVersion.$gdxVersion"
 ```
 
 `$libVersion` is the current version of the library, usually following `MAJOR.MINOR` schema. `$gdxVersion` is the LibGDX version used to build (and required by) the library. You can check the current library version [here](http://search.maven.org/#search|ga|1|g%3A%22com.github.czyzby%22) - or you can use the [snapshots](https://oss.sonatype.org/content/repositories/snapshots/com/github/czyzby/).

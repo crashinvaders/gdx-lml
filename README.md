@@ -1,18 +1,11 @@
-```
- 
- 
- 
- 
- 
- 
- 
- 
-```
-
 # Disclaimer
 
-The libraries from this repository are **no longer maintained**. They are not expected to be compatible with the latest
-LibGDX releases.
+This is a fork of the archived [gdx-lml](https://github.com/czyzby/gdx-lml) project.
+It's meant to be a **compatibility maintained version of the old library** 
+(with the latest LibGDX) and there are **no plans for further development**.
+
+You're welcome to submit bug issues and improvement PRs. 
+Please be aware that feature requests most likely be denied, unless they can really impress me :).
 
 ### Alternatives and forks
 
@@ -24,18 +17,7 @@ an alternative to the official `gdx-setup` tool.
 - [MrStahlfelge/gdx-websockets](https://github.com/MrStahlfelge/gdx-websockets): a fork of the `gdx-websockets` module.
 A multiplatform web sockets client for LibGDX.
 
-```
- 
- 
- 
- 
- 
- 
- 
- 
-```
-
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.czyzby/gdx-lml.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.czyzby%22%20)
+[![Maven Central](https://img.shields.io/maven-central/v/com.crashinvaders.lml/gdx-lml.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.crashinvaders.lml%22%20)
 
 # LibGDX utilities
 This repository contains various LibGDX extensions covering various features such as dependency injection, GUI building, networking and general utilities.
@@ -99,9 +81,9 @@ Other LibGDX-related projects include:
 ## Dependencies
 All libraries follow the same schema:
 ```
-        compile "com.github.czyzby:lib-name:$libVersion.$gdxVersion"
+        compile "com.crashinvaders.lml:lib-name:$libVersion.$gdxVersion"
 ```
-`lib-name` is the name of the library (one of the ones listed above). `libVersion` follows `MAJOR.MINOR` schema and is the actual version of the library. `gdxVersion` is the version of the LibGDX library used to build the archive. For example, this is a valid LML dependency (although it might be out of date by now!): `'com.github.czyzby:gdx-lml:1.5.1.9.2'`. To find out the current version ID and GWT module, check out the specific library's `README` file. Looking through [Maven Central](http://search.maven.org/#search|ga|1|g%3A%22com.github.czyzby%22) might also help.
+`lib-name` is the name of the library (one of the ones listed above). `libVersion` follows `MAJOR.MINOR` schema and is the actual version of the library. `gdxVersion` is the version of the LibGDX library used to build the archive. For example, this is a valid LML dependency (although it might be out of date by now!): `'com.crashinvaders.lml:gdx-lml:1.9.1.10.0'`. To find out the current version ID and GWT module, check out the specific library's `README` file. Looking through [Maven Central](http://search.maven.org/#search|ga|1|g%3A%22com.github.czyzby%22) might also help.
 
 ## Working with the sources
 Clone this repository. The whole setup is Gradle-based, with very similar structure to default LibGDX projects generated with `gdx-setup`. Note that Gradle wrapper is not included in the root project, so you should have Gradle installed locally.

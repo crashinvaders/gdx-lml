@@ -3,7 +3,7 @@ eclipse.project.name = appName + '-core'
 
 dependencies {
   compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-  compile "com.github.czyzby:gdx-lml-vis:$libVersion"
+  compile "com.crashinvaders.lml:gdx-lml-vis:$libVersion"
   compile "com.github.tommyettinger:regexodus:$regexodusVersion"
 }
         

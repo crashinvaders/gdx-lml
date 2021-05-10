@@ -21,8 +21,8 @@ allprojects {
   ext {
     projectVersion = '1.9'
     gdxVersion = '1.10.0'
-    isSnapshot = '-SNAPSHOT'
-    libVersion = "$projectVersion.$gdxVersion$isSnapshot"
+    isSnapshot = false
+    libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
   }
 }
 
@@ -46,7 +46,7 @@ subprojects {
 
   sourceCompatibility = 1.7
   targetCompatibility = 1.7
-  group = 'com.github.czyzby'
+  group = 'com.crashinvaders.lml'
   version = libVersion
   archivesBaseName = projectName
   eclipse.project.name = projectName
@@ -106,7 +106,7 @@ subprojects {
           name = projectName
           packaging 'jar'
           description = projectDesc
-          url 'http://github.com/czyzby/gdx-lml'
+          url 'http://github.com/crashinvaders/gdx-lml'
 
           licenses {
             license {
@@ -116,12 +116,17 @@ subprojects {
           }
           
           scm {
-            connection 'scm:git:git@github.com:czyzby/gdx-lml.git'
-            developerConnection 'scm:git:git@github.com:czyzby/gdx-lml.git'
-            url 'http://github.com/czyzby/gdx-lml/'
+            connection 'scm:git:git@github.com:crashinvaders/gdx-lml.git'
+            developerConnection 'scm:git:git@github.com:crashinvaders/gdx-lml.git'
+            url 'http://github.com/crashinvaders/gdx-lml'
           }
 
           developers {
+            developer {
+              id 'metaphore'
+              name 'Anton Chekulaev'
+              email 'metaphore@crashinvaders.com'
+            }
             developer {
               id 'mj'
               name 'MJ'
@@ -150,7 +155,7 @@ task installBase(dependsOn: ['installKiwi', 'lml:build', 'lml:install',
 task installKiwi(dependsOn: ['kiwi:build', 'kiwi:install'])
 
 nexusStaging {
-  packageGroup = 'com.github.czyzby'
+  packageGroup = 'com.crashinvaders.lml'
   username = ossrhUsername
   password = ossrhPassword
 }

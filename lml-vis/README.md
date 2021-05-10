@@ -1,10 +1,10 @@
-# [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) parser for [LML](http://github.com/czyzby/gdx-lml) templates
+# [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) parser for [LML](http://github.com/crashinvaders/gdx-lml) templates
 
 See [gdx-lml](../lml). This extension allows *LML* to create improved *VisUI* widgets instead of regular *Scene2D* actors.
 
 ## Examples
 
-Check [gdx-lml-vis-tests](../examples/gdx-lml-vis-tests) for examples of all tags and macros usage. Check [gdx-lml-vis-websocket](../examples/gdx-lml-vis-websocket) for a simple (yet practical) mock-up application. [gdx-lml-serialization-tests](../examples/gdx-websocket-serialization-tests) is a tiny application that uses `gdx-lml-vis` to create GUI. You can find a step-by-step tutorial how to include this library to create a simple application [here](https://github.com/czyzby/gdx-lml/wiki/Your-first-LML-application).
+Check [gdx-lml-vis-tests](../examples/gdx-lml-vis-tests) for examples of all tags and macros usage. Check [gdx-lml-vis-websocket](../examples/gdx-lml-vis-websocket) for a simple (yet practical) mock-up application. [gdx-lml-serialization-tests](../examples/gdx-websocket-serialization-tests) is a tiny application that uses `gdx-lml-vis` to create GUI. You can find a step-by-step tutorial how to include this library to create a simple application [here](https://github.com/crashinvaders/gdx-lml/wiki/Your-first-LML-application).
 
 See on-line demo [here](http://czyzby.github.io/gdx-lml/lml-vis). See application mock-up [here](http://czyzby.github.io/gdx-lml/lml-vis-websocket).
 
@@ -14,7 +14,7 @@ See on-line demo [here](http://czyzby.github.io/gdx-lml/lml-vis). See applicatio
 
 Gradle:
 ```
-        compile "com.github.czyzby:gdx-lml-vis:$libVersion.$gdxVersion"
+        compile "com.crashinvaders.lml:gdx-lml-vis:$libVersion.$gdxVersion"
 ```
 `$libVersion` is the current version of the library, usually following `MAJOR.MINOR` schema. `$gdxVersion` is the LibGDX version used to build (and required by) the library. You can check the current library version [here](http://search.maven.org/#search|ga|1|g%3A%22com.github.czyzby%22) - or you can use the [snapshots](https://oss.sonatype.org/content/repositories/snapshots/com/github/czyzby/).
 
@@ -26,7 +26,7 @@ On GWT, you might also want to include sources of `gdx-lml-vis` and currently us
 
 ## Usage
 
-Start with [LML tutorial](https://github.com/czyzby/gdx-lml/wiki/LibGDX-Markup-Language) - *gdx-lml-vis* works pretty much like regular LML, it just parses templates to different actors, provides additional widgets and contains default skins. Make sure to check out the [example project](../examples/gdx-lml-vis-tests) and [VisUI features](https://github.com/kotcrab/VisEditor/wiki/VisUI).
+Start with [LML tutorial](https://github.com/crashinvaders/gdx-lml/wiki/LibGDX-Markup-Language) - *gdx-lml-vis* works pretty much like regular LML, it just parses templates to different actors, provides additional widgets and contains default skins. Make sure to check out the [example project](../examples/gdx-lml-vis-tests) and [VisUI features](https://github.com/kotcrab/VisEditor/wiki/VisUI).
 
 ### Upgrading regular *gdx-lml* to *gdx-lml-vis*
 
