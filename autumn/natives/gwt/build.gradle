@@ -10,5 +10,5 @@ dependencies {
   provided "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
   provided "com.google.gwt:gwt-user:$gwtVersion"
   provided "com.google.gwt:gwt-dev:$gwtVersion"
-  compile "com.crashinvaders.lml:gdx-autumn:$libVersion"
+  compile project(':autumn')
 }

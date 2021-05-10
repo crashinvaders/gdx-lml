@@ -4,5 +4,5 @@ ext {
 
 dependencies {
   provided "com.jtransc.gdx:gdx-backend-jtransc:$jtranscVersion"
-  compile "com.crashinvaders.lml:gdx-autumn:$libVersion"
+  compile project(':autumn')
 }

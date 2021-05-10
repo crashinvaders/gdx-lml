@@ -7,6 +7,6 @@ javadoc {
 }
 
 dependencies {
-  compile "com.crashinvaders.lml:gdx-websocket:$libVersion"
+  compile project(':websocket')
   provided "com.google.gwt:gwt-user:$gwtVersion"
 }

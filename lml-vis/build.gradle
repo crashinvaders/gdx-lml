@@ -3,6 +3,6 @@ ext {
 }
 
 dependencies {
-  compile "com.crashinvaders.lml:gdx-lml:$libVersion"
+  compile project(':lml')
   compile "com.kotcrab.vis:vis-ui:$visVersion"
 }

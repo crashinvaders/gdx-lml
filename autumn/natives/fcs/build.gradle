@@ -3,6 +3,6 @@ ext {
 }
 
 dependencies {
-  compile "com.crashinvaders.lml:gdx-autumn:$libVersion"
+  compile project(':autumn')
   compile "io.github.lukehutch:fast-classpath-scanner:$fcsVersion"
 }

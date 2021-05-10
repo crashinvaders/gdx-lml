@@ -54,14 +54,6 @@ subprojects {
     deployerJars
   }
 
-  jar {
-    from project.sourceSets.main.output
-    from(project.sourceSets.main.allSource) {
-      include '**/*.xml'
-    }
-    baseName = archivesBaseName
-  }
-
   dependencies {
     provided "com.badlogicgames.gdx:gdx:$gdxVersion"
     testCompile "junit:junit:$junitVersion"

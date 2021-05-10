@@ -1,4 +1,4 @@
 dependencies {
-  compile "com.crashinvaders.lml:gdx-lml:$libVersion"
-  compile "com.crashinvaders.lml:gdx-uedi:$libVersion"
+  compile project(':lml')
+  compile project(':uedi')
 }
