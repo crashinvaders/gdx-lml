@@ -1,21 +1,11 @@
 # Disclaimer
 
 This is a fork of the archived [gdx-lml](https://github.com/czyzby/gdx-lml) project.
-It's meant to be **compatible with the latest LibGDX version**
-it's **in maintanance mode** and there are **no plans for further development**.
+It's meant to be **compatible with the latest LibGDX version**,
+is currently **in maintanance mode** and there are **no plans for further development**.
 
 You're welcome to submit bug issues and improvement PRs. 
 Please be aware that feature requests most likely be denied, unless they can really impress me :).
-
-### Alternatives and forks
-
-- [libktx/ktx](https://github.com/libktx/ktx): a set of [Kotlin](https://kotlinlang.org/) utilities covering similar
-features as some of the libraries including `gdx-kiwi`, `gdx-lml` or `gdx-autumn`. Recommended when using Kotlin.
-- [tommyettinger/gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff/tree/master/src/main/java/com/github/czyzby):
-forks of `gdx-kiwi`, `gdx-lml`, `gdx-autumn` and `gdx-autumn-mvc` maintained to support the `gdx-liftoff` application -
-an alternative to the official `gdx-setup` tool.
-- [MrStahlfelge/gdx-websockets](https://github.com/MrStahlfelge/gdx-websockets): a fork of the `gdx-websockets` module.
-A multiplatform web sockets client for LibGDX.
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.crashinvaders.lml/gdx-lml.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.crashinvaders.lml%22%20)
 
