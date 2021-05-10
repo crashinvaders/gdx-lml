@@ -27,7 +27,7 @@ allprojects {
 }
 
 subprojects {
-  apply plugin: 'java'
+  apply plugin: 'java-library'
   apply plugin: 'maven'
   apply plugin: 'signing'
 
@@ -53,6 +53,15 @@ subprojects {
   configurations {
     deployerJars
   }
+
+  jar {
+    from project.sourceSets.main.output
+    from(project.sourceSets.main.allSource) {
+      include '**/*.xml'
+    }
+    baseName = archivesBaseName
+  }
+
 
   dependencies {
     provided "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -107,7 +116,7 @@ subprojects {
               url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
             }
           }
-          
+
           scm {
             connection 'scm:git:git@github.com:crashinvaders/gdx-lml.git'
             developerConnection 'scm:git:git@github.com:crashinvaders/gdx-lml.git'
@@ -130,22 +139,47 @@ subprojects {
       }
     }
   }
+
+  // Invokes uploadArchives task if the version is a snapshot.
+  task uploadSnapshotArchives() {
+    if (!isSnapshot) {
+      return;
+    }
+    dependsOn 'build'
+    dependsOn 'uploadArchives'
+  }
 }
 
-// Invokes 'build' and 'install' tasks on all projects in the correct order.
-// Prefer this over 'gradle build install' when changing the version of library.
-task installAll(dependsOn: ['installBase', 'lml-vis:build', 'lml-vis:install',
-  'mvc:build', 'mvc:install', 'autumn:natives:android:build',
-  'autumn:natives:android:install', 'autumn:natives:fcs:build',
-  'autumn:natives:fcs:install', 'autumn:natives:gwt:build',
-  'autumn:natives:gwt:install', 'websocket:natives:common:build',
-  'websocket:natives:common:install', 'websocket:natives:gwt:build',
-  'websocket:natives:gwt:install', 'websocket:natives:serialization:build',
-  'websocket:natives:serialization:install'])
-task installBase(dependsOn: ['installKiwi', 'lml:build', 'lml:install',
-  'autumn:build', 'autumn:install', 'websocket:build', 'websocket:install',
-  'uedi:build', 'uedi:install'])
-task installKiwi(dependsOn: ['kiwi:build', 'kiwi:install'])
+task publishAll {
+  group 'gdx-lml'
+  description 'Publish all the Maven artifacts to the public repos.'
+
+  subprojects.forEach {project ->
+    dependsOn project.build
+    dependsOn project.uploadArchives
+  }
+}
+
+task publishAllSnapshots {
+  group 'gdx-lml'
+  description 'Publish all the Maven artifacts to the public repos.' +
+          'This task will only be execute if the current version is a snapshot.'
+
+  subprojects.forEach {project ->
+    dependsOn project.build
+    dependsOn project.uploadSnapshotArchives
+  }
+}
+
+task installAll {
+  group 'gdx-lml'
+  description 'Installes all the Maven artifacts to the local Maven repo.'
+
+  subprojects.forEach {project ->
+    dependsOn project.build
+    dependsOn project.install
+  }
+}
 
 nexusStaging {
   packageGroup = 'com.crashinvaders.lml'
