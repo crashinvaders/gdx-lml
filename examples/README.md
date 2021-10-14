@@ -1,3 +1,8 @@
+# Disclaimer
+
+Example projects are largely outdated and are not maintained at the moment. 
+Please use this code as reference with cautions as it most likely out of date. 
+
 # Examples
 
 This section includes some example LibGDX projects using the presented libraries. All these projects are separate and autonomous from the main Gradle build.
