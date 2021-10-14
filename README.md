@@ -5,9 +5,12 @@ It's meant to be **compatible with the latest LibGDX version**,
 is currently **in maintanance mode** and there are **no plans for further development**.
 
 You're welcome to submit bug issues and improvement PRs. 
-Please be aware that feature requests most likely be denied, unless they can really impress me :).
+Please be aware that feature requests most likely be denied, unless they can really impress me :)
 
+[![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.crashinvaders.lml/gdx-lml?label=Stable&server=https%3A%2F%2Fs01.oss.sonatype.org&style=for-the-badge)](https://s01.oss.sonatype.org/#nexus-search;quick~com.crashinvaders.lml)
 [![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.crashinvaders.lml/gdx-lml?server=https%3A%2F%2Fs01.oss.sonatype.org&label=snapshot&style=for-the-badge)](https://s01.oss.sonatype.org/#nexus-search;quick~com.crashinvaders.lml)
+
+
 
 # LibGDX utilities
 This repository contains various LibGDX extensions covering various features such as dependency injection, GUI building, networking and general utilities.
