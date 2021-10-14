@@ -5,13 +5,9 @@ buildscript {
     maven { url "https://plugins.gradle.org/m2/" }
   }
   dependencies {
-    classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3"
     classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.3'
   }
 }
-
-apply plugin: 'distribution'
-apply plugin: 'io.codearte.nexus-staging'
 
 allprojects {
   apply plugin: 'eclipse'
@@ -25,6 +21,23 @@ allprojects {
     libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
   }
 }
+
+/** Checks if the property exists and if not tries to resolve it from the environment variable. */
+void resolveProperty(String propertyName, String envVariableName) {
+  if (!project.hasProperty(propertyName)) {
+    project.ext.propertyName = System.getenv(envVariableName)
+    if (!project.ext.propertyName) {
+      println "$propertyName is not defined"
+    } else {
+      println "$propertyName has been set from an environment variable."
+    }
+  }
+}
+// Setup Nexus repo credentials.
+// They usually defined in user global gradle.properties file
+// or as environment variables (Travis-CI).
+resolveProperty('ossrhUsername', 'OSSRH_USERNAME')
+resolveProperty('ossrhPassword', 'OSSRH_PASSWORD')
 
 def libModules = subprojects - project(':autumn:natives') - project(':websocket:natives')
 
@@ -56,20 +69,19 @@ configure(libModules) {
     deployerJars
   }
 
+  dependencies {
+    provided "com.badlogicgames.gdx:gdx:$gdxVersion"
+    testCompile "junit:junit:$junitVersion"
+    deployerJars "org.apache.maven.wagon:wagon-ssh:$wagonVersion"
+    deployerJars "org.apache.maven.wagon:wagon-http:$wagonVersion"
+  }
+
   jar {
     from project.sourceSets.main.output
     from(project.sourceSets.main.allSource) {
       include '**/*.xml'
     }
     baseName = archivesBaseName
-  }
-
-
-  dependencies {
-    provided "com.badlogicgames.gdx:gdx:$gdxVersion"
-    testCompile "junit:junit:$junitVersion"
-    deployerJars "org.apache.maven.wagon:wagon-ssh:$wagonVersion"
-    deployerJars "org.apache.maven.wagon:wagon-http:$wagonVersion"
   }
 
   task sourcesJar(type: Jar) {
@@ -180,31 +192,6 @@ task installAll {
   libModules.forEach {project ->
     dependsOn project.build
     dependsOn project.install
-  }
-}
-
-nexusStaging {
-  packageGroup = 'com.crashinvaders.lml'
-  username = ossrhUsername
-  password = ossrhPassword
-}
-
-distributions {
-  main {
-    baseName = libVersion
-    contents {
-      libModules.each { sub ->
-        into('lib') {
-          from sub.jar
-        }
-        into('src') {
-          from sub.sourcesJar
-        }
-        into('doc') {
-          from sub.javadocJar
-        }
-      }
-    }
   }
 }
 
