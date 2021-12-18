@@ -15,7 +15,7 @@ allprojects {
   apply plugin: 'nebula.provided-base'
 
   ext {
-    projectVersion = '1.11'
+    projectVersion = '1.10'
     gdxVersion = '1.10.0'
     isSnapshot = true
     libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
