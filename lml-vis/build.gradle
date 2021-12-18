@@ -3,6 +3,6 @@ ext {
 }
 
 dependencies {
-  compile project(':lml')
-  compile "com.kotcrab.vis:vis-ui:$visVersion"
+  api project(':lml')
+  api "com.kotcrab.vis:vis-ui:$visVersion"
 }

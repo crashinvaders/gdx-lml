@@ -1,4 +1,4 @@
 dependencies {
-  compile project(':autumn')
-  compile project(':lml')
+  api project(':autumn')
+  api project(':lml')
 }
