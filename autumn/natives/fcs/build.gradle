@@ -1,8 +1,8 @@
 ext {
-  fcsVersion = '2.21'
+  classgraphVersion = '4.8.138'
 }
 
 dependencies {
-  compile project(':autumn')
-  compile "io.github.lukehutch:fast-classpath-scanner:$fcsVersion"
+  implementation project(':autumn')
+  implementation "io.github.classgraph:classgraph:$classgraphVersion"
 }
