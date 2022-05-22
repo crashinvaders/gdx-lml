@@ -74,9 +74,13 @@ Other LibGDX-related projects include:
 ## Dependencies
 All libraries follow the same schema:
 ```groovy
-        compile "com.crashinvaders.lml:lib-name:$libVersion.$gdxVersion"
+api "com.crashinvaders.lml:lib-name:$libVersion.$gdxVersion"
 ```
-`lib-name` is the name of the library (one of the ones listed above). `libVersion` follows `MAJOR.MINOR` schema and is the actual version of the library. `gdxVersion` is the version of the LibGDX library used to build the archive. For example, this is a valid LML dependency (although it might be out of date by now!): `'com.crashinvaders.lml:gdx-lml:1.9.1.10.0'`. To find out the current version ID and GWT module, check out the specific library's `README` file. Looking through [Maven Central](http://search.maven.org/#search|ga|1|g%3A%22com.github.czyzby%22) might also help.
+`lib-name` is the name of the library (one of the ones listed above). `libVersion` follows `MAJOR.MINOR` schema and is the actual version of the library. `gdxVersion` is the version of the LibGDX library used to build the archive. For example, this is a valid LML dependency:
+```groovy
+api 'com.crashinvaders.lml:gdx-lml:1.10.1.11.0'
+```
+To find out the current version ID and GWT module, check out the specific library's `README` file. Looking through [Maven Central](http://search.maven.org/#search|ga|1|g%3A%22com.crashinvaders.lml%22) might also help.
 
 ## Working with the sources
 Clone this repository. The whole setup is Gradle-based, with very similar structure to default LibGDX projects generated with `gdx-setup`. Note that Gradle wrapper is not included in the root project, so you should have Gradle installed locally.
