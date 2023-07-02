@@ -17,13 +17,7 @@ public class CellUniformXLmlAttribute extends AbstractCellLmlAttribute {
     }
 
     protected boolean determineUniformY(final Cell<?> cell) {
-        try {
-            return cell.getUniformY();
-        } catch (final Exception exception) {
-            // LibGDX Scene2D method returns boolean, while the field is a Boolean that might not have been initiated.
-            // This causes a NPE - so when an exception is thrown, we assume that the uniform was not set.
-            Exceptions.ignore(exception);
-            return false;
-        }
+        Boolean v = cell.getUniformY();
+        return v != null && v;
     }
 }

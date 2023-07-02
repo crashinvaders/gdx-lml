@@ -16,8 +16,8 @@ allprojects {
 
   ext {
     projectVersion = '1.10'
-    gdxVersion = '1.11.0'
-    isSnapshot = false
+    gdxVersion = '1.12.0'
+    isSnapshot = true
     libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
   }
 }
@@ -48,7 +48,7 @@ configure(libModules) {
 
   ext {
     wagonVersion = '2.10'
-    junitVersion = '4.12'
+    junitVersion = '4.13.2'
   }
 
   repositories {
@@ -56,10 +56,11 @@ configure(libModules) {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    google()
   }
 
-  sourceCompatibility = 1.7
-  targetCompatibility = 1.7
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
   group = 'com.crashinvaders.lml'
   version = libVersion
   archivesBaseName = projectName

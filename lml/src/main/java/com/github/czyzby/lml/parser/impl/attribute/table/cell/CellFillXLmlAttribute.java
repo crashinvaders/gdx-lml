@@ -17,13 +17,7 @@ public class CellFillXLmlAttribute extends AbstractCellLmlAttribute {
     }
 
     protected boolean determineFillY(final Cell<?> cell) {
-        try {
-            return cell.getFillY() > 0f;
-        } catch (final Exception exception) {
-            // LibGDX Scene2D method returns float, while the field is a Float that might not have been initiated. This
-            // causes a NPE - so when an exception is thrown, we assume that the fill was not set.
-            Exceptions.ignore(exception);
-            return false;
-        }
+        Float v = cell.getFillY();
+        return v != null && v > 0f;
     }
 }

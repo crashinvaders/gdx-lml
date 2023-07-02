@@ -17,13 +17,7 @@ public class CellExpandXLmlAttribute extends AbstractCellLmlAttribute {
     }
 
     protected boolean determineExpandY(final Cell<?> cell) {
-        try {
-            return cell.getExpandY() > 0;
-        } catch (final Exception exception) {
-            // LibGDX Scene2D method returns int, while the field is an Integer that might not have been initiated. This
-            // causes a NPE - so when an exception is thrown, we assume that the expand was not set.
-            Exceptions.ignore(exception);
-            return false;
-        }
+        Integer v = cell.getExpandY();
+        return v != null && v > 0;
     }
 }
