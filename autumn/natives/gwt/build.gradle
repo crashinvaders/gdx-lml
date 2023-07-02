@@ -2,13 +2,15 @@ ext {
   gwtVersion = '2.8.2'
 }
 
+project.group = 'autumn.natives'
+
 javadoc {
   options.addStringOption("sourcepath", "")
 }
 
 dependencies {
-  provided "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-  provided "com.google.gwt:gwt-user:$gwtVersion"
-  provided "com.google.gwt:gwt-dev:$gwtVersion"
-  compile project(':autumn')
+  compileOnly "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+  compileOnly "com.google.gwt:gwt-user:$gwtVersion"
+  compileOnly "com.google.gwt:gwt-dev:$gwtVersion"
+  implementation project(':autumn')
 }

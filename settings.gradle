@@ -1,4 +1,14 @@
-include 'kiwi', 'lml', 'lml-vis',
-        'autumn', 'autumn:natives:android', 'autumn:natives:fcs', 'autumn:natives:gwt', 'autumn:natives:jtransc', 'mvc',
-        'websocket', 'websocket:natives:common', 'websocket:natives:gwt', 'websocket:natives:serialization',
-        'uedi'
+include 'kiwi'
+include 'lml'
+include 'lml-vis'
+include 'autumn'
+include 'autumn:natives:android'
+include 'autumn:natives:fcs'
+include 'autumn:natives:gwt'
+include 'autumn:natives:jtransc'
+include 'mvc'
+include 'websocket'
+include 'websocket:natives:common'
+include 'websocket:natives:gwt'
+include 'websocket:natives:serialization'
+include 'uedi'

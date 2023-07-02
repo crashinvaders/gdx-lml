@@ -7,6 +7,6 @@ javadoc {
 }
 
 dependencies {
-  compile project(':websocket')
-  provided "com.google.gwt:gwt-user:$gwtVersion"
+  implementation project(':websocket')
+  compileOnly "com.google.gwt:gwt-user:$gwtVersion"
 }

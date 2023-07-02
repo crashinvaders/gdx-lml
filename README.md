@@ -78,7 +78,7 @@ api "com.crashinvaders.lml:lib-name:$libVersion.$gdxVersion"
 ```
 `lib-name` is the name of the library (one of the ones listed above). `libVersion` follows `MAJOR.MINOR` schema and is the actual version of the library. `gdxVersion` is the version of the LibGDX library used to build the archive. For example, this is a valid LML dependency:
 ```groovy
-api 'com.crashinvaders.lml:gdx-lml:1.10.1.11.0'
+api 'com.crashinvaders.lml:gdx-lml:1.10.1.12.0'
 ```
 To find out the current version ID and GWT module, check out the specific library's `README` file. Looking through [Maven Central](http://search.maven.org/#search|ga|1|g%3A%22com.crashinvaders.lml%22) might also help.
 

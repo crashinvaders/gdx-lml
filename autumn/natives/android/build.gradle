@@ -1,9 +1,35 @@
-ext {
-  androidVersion = '4.1.1.4'
+apply plugin: 'com.android.library'
+
+android {
+  namespace "com.crashinvaders.lml.autumn.natives.android"
+  compileSdkVersion 30
+  buildToolsVersion '30.0.3'
+
+  defaultConfig {
+    minSdkVersion 14
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs = ["src"]
+    }
+  }
+
+//  compileOptions {
+//    sourceCompatibility = versions.java
+//    targetCompatibility = versions.java
+//  }
+//  publishing {
+//    singleVariant("release") {
+//      withSourcesJar()
+//      withJavadocJar()
+//    }
+//  }
 }
 
 dependencies {
-  provided "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-  provided "com.google.android:android:$androidVersion"
-  compile project(':autumn')
+  compileOnly "com.badlogicgames.gdx:gdx:$gdxVersion"
+  compileOnly "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+  implementation project(':autumn')
 }

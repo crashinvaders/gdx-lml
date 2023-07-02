@@ -1,10 +1,13 @@
 buildscript {
   repositories {
+    google()
     mavenCentral()
+    gradlePluginPortal()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://plugins.gradle.org/m2/" }
   }
   dependencies {
+    classpath "com.android.tools.build:gradle:4.2.2"
     classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.3'
   }
 }
@@ -16,7 +19,7 @@ allprojects {
 
   ext {
     projectVersion = '1.10'
-    gdxVersion = '1.11.0'
+    gdxVersion = '1.12.0'
     isSnapshot = false
     libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
   }
@@ -39,7 +42,19 @@ void resolveProperty(String propertyName, String envVariableName) {
 resolveProperty('ossrhUsername', 'OSSRH_USERNAME')
 resolveProperty('ossrhPassword', 'OSSRH_PASSWORD')
 
-def libModules = subprojects - project(':autumn:natives') - project(':websocket:natives')
+def libModules = subprojects - project(':autumn:natives') - project(':websocket:natives') - project(':autumn:natives:android')
+
+allprojects {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" }
+  }
+}
 
 configure(libModules) {
   apply plugin: 'java-library'
@@ -51,15 +66,8 @@ configure(libModules) {
     junitVersion = '4.12'
   }
 
-  repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-  }
-
-  sourceCompatibility = 1.7
-  targetCompatibility = 1.7
+  sourceCompatibility = 8.0
+  targetCompatibility = 8.0
   group = 'com.crashinvaders.lml'
   version = libVersion
   archivesBaseName = projectName
@@ -70,7 +78,7 @@ configure(libModules) {
   }
 
   dependencies {
-    provided "com.badlogicgames.gdx:gdx:$gdxVersion"
+    compileOnly "com.badlogicgames.gdx:gdx:$gdxVersion"
     testCompile "junit:junit:$junitVersion"
     deployerJars "org.apache.maven.wagon:wagon-ssh:$wagonVersion"
     deployerJars "org.apache.maven.wagon:wagon-http:$wagonVersion"

@@ -3,6 +3,6 @@ ext {
 }
 
 dependencies {
-  provided "com.jtransc.gdx:gdx-backend-jtransc:$jtranscVersion"
-  compile project(':autumn')
+  compileOnly "com.jtransc.gdx:gdx-backend-jtransc:$jtranscVersion"
+  implementation project(':autumn')
 }

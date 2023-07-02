@@ -3,6 +3,6 @@ ext {
 }
 
 dependencies {
-  compile project(':websocket')
-  compile "com.neovisionaries:nv-websocket-client:$nvVersion"
+  implementation project(':websocket')
+  implementation "com.neovisionaries:nv-websocket-client:$nvVersion"
 }
