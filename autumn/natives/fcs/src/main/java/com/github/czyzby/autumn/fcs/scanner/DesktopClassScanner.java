@@ -8,40 +8,35 @@ import com.github.czyzby.autumn.AutumnRoot;
 import com.github.czyzby.autumn.scanner.ClassScanner;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 import com.github.czyzby.kiwi.util.gdx.collection.GdxSets;
-import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ClassInfoList;
-import io.github.classgraph.ScanResult;
+
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import io.github.lukehutch.fastclasspathscanner.matchprocessor.ClassAnnotationMatchProcessor;
 
 /** Default, efficient class scanner for desktop. Does not rely on reflection and does not load scanned classes. Uses
- * {@link ClassGraph} wrapped with and adapted to {@link ClassScanner} interface to serve as default class
+ * {@link FastClasspathScanner} wrapped with and adapted to {@link ClassScanner} interface to serve as default class
  * scanner for desktop LibGDX applications using Autumn. If for some reason this scanner does not work for you, try
  * {@link com.github.czyzby.autumn.nongwt.scanner.FallbackDesktopClassScanner} (which is much slower, as it depends on
  * reflection) or {@link com.github.czyzby.autumn.scanner.FixedClassScanner} (which will force you to register class
  * pool to scan, sacrificing true component scanning).
  *
  * @author MJ
- * @author metaphore
- * @see ClassGraph */
+ * @see FastClasspathScanner */
 public class DesktopClassScanner implements ClassScanner {
     @Override
     public Array<Class<?>> findClassesAnnotatedWith(final Class<?> root,
-            final Iterable<Class<? extends Annotation>> annotations) {
-
-        ScanResult scanResult = new ClassGraph()
-//                .verbose()
-                .enableAnnotationInfo()
-                .acceptPackages(
-                        root.getPackage().getName(),
-                        AutumnRoot.class.getPackage().getName())
-                .scan();
-
+                                                    final Iterable<Class<? extends Annotation>> annotations) {
         final ObjectSet<Class<?>> result = GdxSets.newSet(); // Using set to remove duplicates.
+        final FastClasspathScanner scanner = new FastClasspathScanner(root.getPackage().getName(),
+                AutumnRoot.class.getPackage().getName());
         for (final Class<? extends Annotation> annotation : annotations) {
-            ClassInfoList matchingClasses = scanResult.getClassesWithAnnotation(annotation);
-            for (Class<?> matchingClass : matchingClasses.loadClasses()) {
-                result.add(matchingClass);
-            }
+            scanner.matchClassesWithAnnotation(annotation, new ClassAnnotationMatchProcessor() {
+                @Override
+                public void processMatch(final Class<?> matchingClass) {
+                    result.add(matchingClass);
+                }
+            });
         }
+        scanner.scan();
         return GdxArrays.newArray(result);
     }
 }

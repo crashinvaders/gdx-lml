@@ -1,9 +1,15 @@
-ext {
-  androidVersion = '4.1.1.4'
+repositories {
+  mavenLocal()
+  mavenCentral()
+  maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+  maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+  google()
 }
 
+sourceCompatibility = 8
+targetCompatibility = 8
+
 dependencies {
-  provided "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-  provided "com.google.android:android:$androidVersion"
-  compile project(':autumn')
+  api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+  api project(':autumn')
 }
