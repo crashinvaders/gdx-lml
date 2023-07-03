@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.regex.Pattern;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -100,14 +101,14 @@ public class FallbackDesktopClassScanner implements ClassScanner {
     }
 
     private static String getBinaryClassName(final String mainPackageName, final File classPathFile, final int depth) {
-        final String[] classFolders = classPathFile.getPath().split(File.separator);
+        final String[] classFolders = classPathFile.getPath().split(Pattern.quote(File.separator));
         final StringBuilder builder = new StringBuilder(mainPackageName);
         for (int folderIndex = classFolders.length - depth; folderIndex < classFolders.length - 1; folderIndex++) {
             builder.append(DOT_SEPARATOR).append(classFolders[folderIndex]);
         }
         final String classFileName = classFolders[classFolders.length - 1];
         builder.append(DOT_SEPARATOR)
-                .append(classFileName.substring(0, classFileName.length() - CLASS_FILE_EXTENSION.length()));
+                .append(classFileName, 0, classFileName.length() - CLASS_FILE_EXTENSION.length());
         return builder.toString();
     }
 
