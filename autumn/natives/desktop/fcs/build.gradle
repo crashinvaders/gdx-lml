@@ -1,0 +1,10 @@
+apply plugin: 'java-library'
+
+ext {
+  fcsVersion = '2.21'
+}
+
+dependencies {
+  api project(':autumn')
+  implementation "io.github.lukehutch:fast-classpath-scanner:$fcsVersion"
+}

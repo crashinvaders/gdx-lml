@@ -1,8 +1,6 @@
-ext {
-  classgraphVersion = '4.8.138'
-}
+// This is a meta-package that points to the "gdx-autumn-desktop-classgraph" module for backward compatibility reasons.
+// It's deprecated and is due to removal.
 
 dependencies {
-  implementation project(':autumn')
-  implementation "io.github.classgraph:classgraph:$classgraphVersion"
+  api project(':autumn:natives:desktop:classgraph')
 }

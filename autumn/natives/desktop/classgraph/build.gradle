@@ -1,0 +1,8 @@
+ext {
+  classgraphVersion = '4.8.161'
+}
+
+dependencies {
+  api project(':autumn')
+  implementation "io.github.classgraph:classgraph:$classgraphVersion"
+}

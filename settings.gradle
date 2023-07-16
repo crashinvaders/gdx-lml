@@ -1,14 +1,24 @@
 include 'kiwi'
+
 include 'lml'
 include 'lml-vis'
+
 include 'autumn'
 include 'autumn:natives:android'
 include 'autumn:natives:fcs'
+include 'autumn:natives:desktop:fcs'
+include 'autumn:natives:desktop:classgraph'
 include 'autumn:natives:gwt'
 include 'autumn:natives:jtransc'
+// Rename is required to avoid the "duplicate module names" error from the Android Gradle plugin.
+project(':autumn:natives:fcs').name = 'autumn-natives-fcs'
+project(':autumn:natives:gwt').name = 'autumn-natives-gwt'
+
 include 'mvc'
+
 include 'websocket'
 include 'websocket:natives:common'
 include 'websocket:natives:gwt'
 include 'websocket:natives:serialization'
+
 include 'uedi'

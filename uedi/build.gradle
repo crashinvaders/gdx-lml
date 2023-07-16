@@ -5,7 +5,7 @@ ext {
 dependencies {
   api project(':kiwi')
 
-  // Even so we forked LML to maintain it entirely, there seem to be no need
+  // Even though we forked LML to maintain it entirely, there seem to be no need
   // in forking archived uedi-api repo (https://github.com/crashinvaders/uedi)
   // as it's standalone header kinda lib.
   api "com.github.czyzby:uedi-api:$uediVersion"

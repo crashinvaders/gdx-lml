@@ -2,8 +2,6 @@ ext {
   gwtVersion = '2.8.2'
 }
 
-project.group = 'autumn.natives'
-
 javadoc {
   options.addStringOption("sourcepath", "")
 }

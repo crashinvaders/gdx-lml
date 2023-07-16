@@ -42,7 +42,7 @@ void resolveProperty(String propertyName, String envVariableName) {
 resolveProperty('ossrhUsername', 'OSSRH_USERNAME')
 resolveProperty('ossrhPassword', 'OSSRH_PASSWORD')
 
-def libModules = subprojects - project(':autumn:natives') - project(':websocket:natives') - project(':autumn:natives:android')
+def libModules = subprojects - project(':autumn:natives') - project(':autumn:natives:desktop') - project(':websocket:natives') - project(':autumn:natives:android')
 
 allprojects {
   repositories {
@@ -79,7 +79,8 @@ configure(libModules) {
 
   dependencies {
     compileOnly "com.badlogicgames.gdx:gdx:$gdxVersion"
-    testCompile "junit:junit:$junitVersion"
+    testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    testImplementation "junit:junit:$junitVersion"
     deployerJars "org.apache.maven.wagon:wagon-ssh:$wagonVersion"
     deployerJars "org.apache.maven.wagon:wagon-http:$wagonVersion"
   }
