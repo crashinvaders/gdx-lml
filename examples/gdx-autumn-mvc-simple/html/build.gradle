@@ -1,6 +1,11 @@
 apply plugin: 'gwt'
 apply plugin: 'war'
-apply plugin: 'jetty'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+//compileJava.options.incremental = true
+
+sourceSets.main.java.srcDirs = [ "src/" ]
 
 gwt {
     gwtVersion = gwtFrameworkVersion // Should match the version used for building the GWT backend. See gradle.properties.
@@ -13,24 +18,25 @@ gwt {
     project.webAppDirName = 'webapp'
 
     compiler {
-        strict = true;
-        disableCastChecking = true;
+        strict = true
+        disableCastChecking = true
     }
 }
 
-task draftRun(type: JettyRunWar) {
-    dependsOn draftWar
-    dependsOn.remove('war')
-    webApp=draftWar.archivePath
-    daemon=true
-}
-
-task superDev(type: de.richsource.gradle.plugins.gwt.GwtSuperDev) {
-    dependsOn draftRun
-    doFirst {
-    	gwt.modules = gwt.devModules
-    }
-}
+//TODO Find HttpFileServer replacement (use Gretty from Liftoff GWT module template).
+//task draftRun(type: JettyRunWar) {
+//    dependsOn draftWar
+//    dependsOn.remove('war')
+//    webApp=draftWar.archivePath
+//    daemon=true
+//}
+//
+//task superDev(type: de.richsource.gradle.plugins.gwt.GwtSuperDev) {
+//    dependsOn draftRun
+//    doFirst {
+//    	gwt.modules = gwt.devModules
+//    }
+//}
 
 task dist(dependsOn: [clean, compileGwt]) {
     doLast {
@@ -54,17 +60,11 @@ draftWar {
    from "war"
 }
 
-task addSource << {
-	sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
+task addSource {
+    doLast {
+        sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
+    }
 }
 
 tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
-
-sourceCompatibility = 1.7
-sourceSets.main.java.srcDirs = [ "src/" ]
-
-
-eclipse.project {
-    name = appName + "-html"
-}

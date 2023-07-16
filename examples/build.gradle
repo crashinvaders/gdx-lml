@@ -3,39 +3,56 @@
 // of all test projects: they are autonomous.
 
 // Copies (overrides) gradle.properties file to all project directories.
-task updateVersion << {
-  file(".").listFiles().findAll { it.isDirectory() && it.name != '.gradle'}
-    .each { directory -> copy {
-      from "gradle.properties"
-      into directory
+task updateVersion {
+    doLast {
+        file(".")
+                .listFiles()
+                .findAll { it.isDirectory() && it.name != '.gradle' }
+                .each { directory ->
+                    copy {
+                        from "gradle.properties"
+                        into directory
+                    }
+                }
     }
-  }
 }
 
 // Invokes `cleanEclipse` and `eclipse` Gradle tasks in every project directory.
-task eclipseAll << {
-  file(".").listFiles().findAll { it.isDirectory() && it.name != '.gradle' }
-    .each { runProcess(it, "gradle", "cleanEclipse", "eclipse") }
+task eclipseAll {
+    doLast {
+        file(".")
+                .listFiles()
+                .findAll { it.isDirectory() && it.name != '.gradle' }
+                .each { runProcess(it, "gradle", "cleanEclipse", "eclipse") }
+    }
 }
 
 // Invokes `desktop:run` Gradle task in every project directory. Note that some
 // projects require server application and will fail to run.
-task runAll << {
-  file(".").listFiles().findAll { it.isDirectory() && it.name != '.gradle' }
-    .each { runProcess(it, "gradle", "desktop:run") }
+task runAll {
+    doLast {
+        file(".")
+                .listFiles()
+                .findAll { it.isDirectory() && it.name != '.gradle' }
+                .each { runProcess(it, "gradle", "desktop:run") }
+    }
 }
 
 // Cleans all projects.
-task cleanAll << {
-  file(".").listFiles().findAll { it.isDirectory() && it.name != '.gradle' }
-    .each { runProcess(it, "gradle", "clean") }
+task cleanAll {
+    doLast {
+        file(".")
+                .listFiles()
+                .findAll { it.isDirectory() && it.name != '.gradle' }
+                .each { runProcess(it, "gradle", "clean") }
+    }
 }
 
 // Utility method. Runs a selected system command in the chosen directory.
 def runProcess(dir, String... commands) {
-  println "Running `${commands.join(' ')}` in ${dir.name}:"
-  def builder = new ProcessBuilder(commands)
-  builder.inheritIO()
-  builder.directory(dir)
-  builder.start().waitFor()
+    println "Running `${commands.join(' ')}` in ${dir.name}:"
+    def builder = new ProcessBuilder(commands)
+    builder.inheritIO()
+    builder.directory(dir)
+    builder.start().waitFor()
 }
