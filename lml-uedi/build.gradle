@@ -1,4 +1,4 @@
 dependencies {
-  compile project(':lml')
-  compile project(':uedi')
+  api project(':lml')
+  api project(':uedi')
 }
