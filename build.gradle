@@ -50,8 +50,9 @@ resolveProperty('ossrhPassword', 'OSSRH_PASSWORD')
 
 def libAndroidModules = [ project(':autumn:natives:android') ]
 def libJavaModules = subprojects - project(':autumn:natives') - project(':autumn:natives:desktop') - project(':websocket:natives') - libAndroidModules
+def allLibModules = libJavaModules + libAndroidModules
 
-configure(libJavaModules + libAndroidModules) {
+configure(allLibModules) {
   apply plugin: 'maven-publish'
   apply plugin: 'signing'
 
@@ -67,7 +68,7 @@ configure(libJavaModules + libAndroidModules) {
         }
       }
 //      maven {
-//        name = "MavenLocal"
+//        name = "MavenLocalExplicit"
 //        url = "file://${System.properties['user.home']}/.m2/repository"
 //      }
     }
@@ -169,8 +170,8 @@ configure(libJavaModules) {
     if (!isSnapshot) {
       return
     }
-    dependsOn 'build'
-    dependsOn 'publish'
+    dependsOn project.assemble
+    dependsOn project.publish
   }
 }
 
@@ -241,15 +242,15 @@ configure(libAndroidModules) {
       required { !isSnapshot && gradle.taskGraph.hasTask("publish") }
       sign publishing.publications.release
     }
+  }
 
-    // Invokes publish task if the version is a snapshot.
-    task publishSnapshot() {
-      if (!isSnapshot) {
-        return
-      }
-      dependsOn 'assemble'
-      dependsOn 'publish'
+  // Invokes publish task if the version is a snapshot.
+  task publishSnapshot() {
+    if (!isSnapshot) {
+      return
     }
+    dependsOn project.assemble
+    dependsOn project.publish
   }
 }
 
@@ -257,7 +258,7 @@ task publishAll {
   group 'gdx-lml'
   description 'Publish all the Maven artifacts to the public repos.'
 
-  libJavaModules.forEach {project ->
+  allLibModules.forEach {project ->
     dependsOn project.build
     dependsOn project.publish
   }
@@ -268,7 +269,7 @@ task publishAllSnapshots {
   description 'Publish all the Maven artifacts to the public repos.' +
           'This task will only be execute if the current version is a snapshot.'
 
-  libJavaModules.forEach {project ->
+  allLibModules.forEach {project ->
     dependsOn project.build
     dependsOn project.publishSnapshot
   }
@@ -278,7 +279,7 @@ task installAll {
   group 'gdx-lml'
   description 'Installs all the Maven artifacts to the local Maven repo.'
 
-  libJavaModules.forEach {project ->
+  allLibModules.forEach {project ->
     dependsOn project.build
     dependsOn project.publishToMavenLocal
   }
