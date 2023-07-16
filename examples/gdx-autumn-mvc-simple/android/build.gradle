@@ -88,5 +88,5 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.crashinvaders.dashysmash/com.crashinvaders.magnetter.android.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.github.czyzby.android/com.github.czyzby.android.AndroidLauncher'
 }
