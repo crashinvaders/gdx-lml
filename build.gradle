@@ -238,15 +238,15 @@ configure(allLibModules) {
             }
 
             signing {
-//            required { !isSnapshot && gradle.taskGraph.hasTask("publish") }
+//                required { !isSnapshot && gradle.taskGraph.hasTask("publish") }
                 sign publishing.publications.mavenJava
             }
 
             // Simply using "required" in signing block doesn't work because taskGraph isn't ready yet.
             gradle.taskGraph.whenReady {
                 tasks.withType(Sign) {
-//                onlyIf { !isSnapshot }
-                    onlyIf { !isSnapshot && gradle.taskGraph.hasTask("publish") }
+                    onlyIf { !isSnapshot }
+//                    onlyIf { !isSnapshot && gradle.taskGraph.hasTask("publish") }
                 }
             }
         }
