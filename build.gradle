@@ -1,46 +1,46 @@
 buildscript {
-  repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://plugins.gradle.org/m2/" }
-  }
-  dependencies {
-    classpath "com.android.tools.build:gradle:7.4.2"
-  }
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.4.2"
+    }
 }
 
 allprojects {
-  repositories {
-    mavenLocal()
-    mavenCentral()
-    google()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" }
-  }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" }
+    }
 
-  ext {
-    projectGroup = 'com.crashinvaders.lml'
-    projectVersion = '1.10'
-    gdxVersion = '1.12.0'
-    isSnapshot = false
-    libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
-  }
+    ext {
+        projectGroup = 'com.crashinvaders.lml'
+        projectVersion = '1.10'
+        gdxVersion = '1.12.0'
+        isSnapshot = false
+        libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
+    }
 }
 
 /** Checks if the property exists and if not tries to resolve it from the environment variable. */
 void resolveProperty(String propertyName, String envVariableName) {
-  if (!project.hasProperty(propertyName)) {
-    project.ext.propertyName = System.getenv(envVariableName)
-    if (!project.ext.propertyName) {
-      println "$propertyName is not defined"
-    } else {
-      println "$propertyName has been set from an environment variable."
+    if (!project.hasProperty(propertyName)) {
+        project.ext.propertyName = System.getenv(envVariableName)
+        if (!project.ext.propertyName) {
+            println "$propertyName is not defined"
+        } else {
+            println "$propertyName has been set from an environment variable."
+        }
     }
-  }
 }
 // Setup Nexus repo credentials.
 // They usually defined in user global gradle.properties file
@@ -52,235 +52,243 @@ def libAndroidModules = [ project(':autumn:natives:android') ]
 def libJavaModules = subprojects - project(':autumn:natives') - project(':autumn:natives:desktop') - project(':websocket:natives') - libAndroidModules
 def allLibModules = libJavaModules + libAndroidModules
 
-configure(allLibModules) {
-  apply plugin: 'maven-publish'
-  apply plugin: 'signing'
-
-  publishing {
-    repositories {
-      maven {
-        def urlRelease = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-        def urlSnapshot = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-        url = isSnapshot ? urlSnapshot : urlRelease
-        credentials {
-          username ossrhUsername
-          password ossrhPassword
-        }
-      }
-//      maven {
-//        name = "MavenLocalExplicit"
-//        url = "file://${System.properties['user.home']}/.m2/repository"
-//      }
-    }
-  }
-}
-
 configure(libJavaModules) {
-  apply plugin: 'java-library'
+    apply plugin: 'java-library'
 
-  sourceCompatibility = 8.0
-  targetCompatibility = 8.0
+    sourceCompatibility = 8.0
+    targetCompatibility = 8.0
 
-  group = ext.projectGroup
-  version = libVersion
-  archivesBaseName = projectName
+    archivesBaseName = projectName
 
-  ext {
-    junitVersion = '4.12'
-  }
-
-  dependencies {
-    compileOnly "com.badlogicgames.gdx:gdx:$gdxVersion"
-    testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
-    testImplementation "junit:junit:$junitVersion"
-  }
-
-  jar {
-    from project.sourceSets.main.output
-    from(project.sourceSets.main.allSource) {
-      include '**/*.xml'
+    ext {
+        junitVersion = '4.12'
     }
-    baseName = archivesBaseName
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-  }
 
-  task sourcesJar(type: Jar) {
-    archiveClassifier.set('sources')
-    from sourceSets.main.allSource
-  }
+    dependencies {
+        compileOnly "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "junit:junit:$junitVersion"
+    }
 
-  task javadocJar(type: Jar) {
-    archiveClassifier.set('javadoc')
-    from javadoc.destinationDir
-  }
-
-  java {
-    withJavadocJar()
-    withSourcesJar()
-  }
-
-  publishing {
-    publications {
-      mavenJava(MavenPublication) {
-        artifactId = projectName
-        from components.java
-        pom {
-          name = projectName
-          description = projectDesc
-          url = 'http://github.com/crashinvaders/gdx-lml'
-          packaging = 'jar'
-
-          licenses {
-            license {
-              name = 'The Apache License, Version 2.0'
-              url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            }
-          }
-
-          developers {
-            developer {
-              id = 'metaphore'
-              name = 'Anton Chekulaev'
-              email = 'metaphore@crashinvaders.com'
-            }
-            developer {
-              id = 'mj'
-              name = 'MJ'
-              email = 'john.hervicc@gmail.com'
-            }
-          }
-
-          scm {
-            connection = 'scm:git:git://github.com:crashinvaders/gdx-lml.git'
-            developerConnection = 'scm:git:git@github.com:crashinvaders/gdx-lml.git'
-            url = 'http://github.com/crashinvaders/gdx-lml'
-          }
+    jar {
+        from project.sourceSets.main.output
+        from(project.sourceSets.main.allSource) {
+            include '**/*.xml'
         }
-      }
+        baseName = archivesBaseName
+        duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     }
-  }
 
-  signing {
-    required { !isSnapshot && gradle.taskGraph.hasTask("publish") }
-    sign publishing.publications.mavenJava
-  }
-
-  // Invokes publish task if the version is a snapshot.
-  task publishSnapshot() {
-    if (!isSnapshot) {
-      return
+    task sourcesJar(type: Jar) {
+        archiveClassifier.set('sources')
+        from sourceSets.main.allSource
     }
-    dependsOn project.assemble
-    dependsOn project.publish
-  }
+
+    task javadocJar(type: Jar) {
+        archiveClassifier.set('javadoc')
+        from javadoc.destinationDir
+    }
+
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
 }
 
 configure(libAndroidModules) {
-  apply plugin: 'com.android.library'
+    apply plugin: 'com.android.library'
 
-  android {
-    compileSdk = 30
-    buildToolsVersion = '30.0.3'
+    android {
+        compileSdk = 30
+        buildToolsVersion = '30.0.3'
 
-    defaultConfig {
-      minSdkVersion 14
-    }
-
-    compileOptions {
-      sourceCompatibility = JavaVersion.VERSION_1_8
-      targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    sourceSets {
-      main {
-        manifest.srcFile 'AndroidManifest.xml'
-      }
-    }
-
-    publishing {
-      singleVariant("release") {
-        withSourcesJar()
-        withJavadocJar()
-      }
-    }
-
-    packagingOptions {
-      // Preventing from license violations (more or less):
-      pickFirst 'META-INF/LICENSE.txt'
-      pickFirst 'META-INF/LICENSE'
-      pickFirst 'META-INF/license.txt'
-      pickFirst 'META-INF/LGPL2.1'
-      pickFirst 'META-INF/NOTICE.txt'
-      pickFirst 'META-INF/NOTICE'
-      pickFirst 'META-INF/notice.txt'
-      // Excluding unnecessary meta-data:
-      exclude 'META-INF/robovm/ios/robovm.xml'
-      exclude 'META-INF/DEPENDENCIES.txt'
-      exclude 'META-INF/DEPENDENCIES'
-      exclude 'META-INF/dependencies.txt'
-    }
-  }
-
-  dependencies {
-    compileOnly "com.badlogicgames.gdx:gdx:$gdxVersion"
-    compileOnly "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-  }
-
-  afterEvaluate {
-    publishing {
-      publications {
-        release(MavenPublication) {
-          from components.release
-          groupId = projectGroup
-          artifactId = projectName
-          version = libVersion
+        defaultConfig {
+            minSdkVersion 14
         }
-      }
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
+
+        sourceSets {
+            main {
+                manifest.srcFile 'AndroidManifest.xml'
+            }
+        }
+
+        publishing {
+            singleVariant("release") {
+                withSourcesJar()
+                withJavadocJar()
+            }
+        }
+
+        packagingOptions {
+            // Preventing from license violations (more or less):
+            pickFirst 'META-INF/LICENSE.txt'
+            pickFirst 'META-INF/LICENSE'
+            pickFirst 'META-INF/license.txt'
+            pickFirst 'META-INF/LGPL2.1'
+            pickFirst 'META-INF/NOTICE.txt'
+            pickFirst 'META-INF/NOTICE'
+            pickFirst 'META-INF/notice.txt'
+            // Excluding unnecessary meta-data:
+            exclude 'META-INF/robovm/ios/robovm.xml'
+            exclude 'META-INF/DEPENDENCIES.txt'
+            exclude 'META-INF/DEPENDENCIES'
+            exclude 'META-INF/dependencies.txt'
+        }
     }
 
-    signing {
-      required { !isSnapshot && gradle.taskGraph.hasTask("publish") }
-      sign publishing.publications.release
+    configurations {
+        runtimeClasspath
     }
-  }
 
-  // Invokes publish task if the version is a snapshot.
-  task publishSnapshot() {
-    if (!isSnapshot) {
-      return
+    dependencies {
+        compileOnly "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compileOnly "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
     }
-    dependsOn project.assemble
-    dependsOn project.publish
-  }
+}
+
+configure(allLibModules) {
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
+
+    group = ext.projectGroup
+    version = libVersion
+
+    afterEvaluate { project ->
+        // Workaround - Android not having components populated yet.
+        afterEvaluate {
+
+            publishing {
+                repositories {
+                    maven {
+                        def urlRelease = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                        def urlSnapshot = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+                        url = isSnapshot ? urlSnapshot : urlRelease
+                        credentials {
+                            username ossrhUsername
+                            password ossrhPassword
+                        }
+                    }
+//                    maven {
+//                        name = "MavenLocalExplicit"
+//                        url = "file://${System.properties['user.home']}/.m2/repository"
+//                    }
+                }
+
+                publications {
+                    mavenJava(MavenPublication) {
+
+                        artifactId = projectName
+
+                        // Most normal java projects.
+                        if (components.findByName("java") != null)
+                            from components.java
+
+                        // Android.
+                        if (components.findByName("release") != null) {
+                            from components.release
+                        }
+
+//                        versionMapping {
+//                            usage('java-api') {
+//                                fromResolutionOf('runtimeClasspath')
+//                            }
+//                            usage('java-runtime') {
+//                                fromResolutionResult()
+//                            }
+//                        }
+
+                        pom {
+                            name = projectName
+                            description = projectDesc
+                            url = 'http://github.com/crashinvaders/gdx-lml'
+
+                            licenses {
+                                license {
+                                    name = 'The Apache License, Version 2.0'
+                                    url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                                }
+                            }
+
+                            developers {
+                                developer {
+                                    id = 'metaphore'
+                                    name = 'Anton Chekulaev'
+                                    email = 'metaphore@crashinvaders.com'
+                                }
+                                developer {
+                                    id = 'mj'
+                                    name = 'MJ'
+                                    email = 'john.hervicc@gmail.com'
+                                }
+                            }
+
+                            scm {
+                                connection = 'scm:git:git://github.com:crashinvaders/gdx-lml.git'
+                                developerConnection = 'scm:git:git@github.com:crashinvaders/gdx-lml.git'
+                                url = 'http://github.com/crashinvaders/gdx-lml'
+                            }
+                        }
+                    }
+                }
+            }
+
+            signing {
+//            required { !isSnapshot && gradle.taskGraph.hasTask("publish") }
+                sign publishing.publications.mavenJava
+            }
+
+            // Simply using "required" in signing block doesn't work because taskGraph isn't ready yet.
+            gradle.taskGraph.whenReady {
+                tasks.withType(Sign) {
+//                onlyIf { !isSnapshot }
+                    onlyIf { !isSnapshot && gradle.taskGraph.hasTask("publish") }
+                }
+            }
+        }
+    }
+
+    // Invokes publish task if the version is a snapshot.
+    task publishSnapshot() {
+        if (!isSnapshot) {
+            return
+        }
+        dependsOn project.assemble
+        dependsOn project.publish
+    }
 }
 
 task publishAll {
-  group 'gdx-lml'
-  description 'Publish all the Maven artifacts to the public repos.'
+    group 'gdx-lml'
+    description 'Publish all the Maven artifacts to the public repos.'
 
-  allLibModules.forEach {project ->
-    dependsOn project.build
-    dependsOn project.publish
-  }
+    allLibModules.forEach {project ->
+        dependsOn project.build
+        dependsOn project.publish
+    }
 }
 
 task publishAllSnapshots {
-  group 'gdx-lml'
-  description 'Publish all the Maven artifacts to the public repos.' +
-          'This task will only be execute if the current version is a snapshot.'
+    group 'gdx-lml'
+    description 'Publish all the Maven artifacts to the public repos.' +
+            'This task will only be execute if the current version is a snapshot.'
 
-  allLibModules.forEach {project ->
-    dependsOn project.build
-    dependsOn project.publishSnapshot
-  }
+    allLibModules.forEach {project ->
+        dependsOn project.build
+        dependsOn project.publishSnapshot
+    }
 }
 
 task installAll {
-  group 'gdx-lml'
-  description 'Installs all the Maven artifacts to the local Maven repo.'
+    group 'gdx-lml'
+    description 'Installs all the Maven artifacts to the local Maven repo.'
 
-  allLibModules.forEach {project ->
-    dependsOn project.build
-    dependsOn project.publishToMavenLocal
-  }
+    allLibModules.forEach {project ->
+        dependsOn project.build
+        dependsOn project.publishToMavenLocal
+    }
 }
