@@ -10,5 +10,5 @@ dependencies {
   compileOnly "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
   compileOnly "com.google.gwt:gwt-user:$gwtVersion"
   compileOnly "com.google.gwt:gwt-dev:$gwtVersion"
-  implementation project(':autumn')
+  api project(':autumn')
 }

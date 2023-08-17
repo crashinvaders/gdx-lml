@@ -4,5 +4,5 @@ ext {
 
 dependencies {
   compileOnly "com.jtransc.gdx:gdx-backend-jtransc:$jtranscVersion"
-  implementation project(':autumn')
+  api project(':autumn')
 }

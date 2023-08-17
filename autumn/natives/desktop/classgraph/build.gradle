@@ -4,5 +4,5 @@ ext {
 
 dependencies {
   api project(':autumn')
-  implementation "io.github.classgraph:classgraph:$classgraphVersion"
+  api "io.github.classgraph:classgraph:$classgraphVersion"
 }
