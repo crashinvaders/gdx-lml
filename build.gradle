@@ -25,8 +25,8 @@ allprojects {
     ext {
         projectGroup = 'com.crashinvaders.lml'
         projectVersion = '1.10'
-        gdxVersion = '1.12.0'
-        isSnapshot = true
+        gdxVersion = '1.12.1'
+        isSnapshot = false
         libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
     }
 }
@@ -254,9 +254,7 @@ configure(allLibModules) {
 
     // Invokes publish task if the version is a snapshot.
     task publishSnapshot() {
-        if (!isSnapshot) {
-            return
-        }
+        onlyIf { isSnapshot }
         dependsOn project.assemble
         dependsOn project.publish
     }
