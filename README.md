@@ -1,19 +1,19 @@
 # Disclaimer
 
 This is a fork of the archived [gdx-lml](https://github.com/czyzby/gdx-lml) project.
-It's meant to be **compatible with the latest LibGDX version**,
+It's meant to be **compatible with the latest libGDX version**,
 is currently **in maintanance mode** and there are **no plans for further development**.
 
 You're welcome to submit bug issues and improvement PRs. 
-Please be aware that feature requests most likely be denied, unless they can really impress me :)
+Please be aware that feature requests most likely will be denied, unless they can really impress me :slightly_smiling_face:
 
 [![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.crashinvaders.lml/gdx-lml?label=Stable&server=https%3A%2F%2Fs01.oss.sonatype.org&style=for-the-badge)](https://s01.oss.sonatype.org/#nexus-search;quick~com.crashinvaders.lml)
 [![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.crashinvaders.lml/gdx-lml?server=https%3A%2F%2Fs01.oss.sonatype.org&label=snapshot&style=for-the-badge)](https://s01.oss.sonatype.org/#nexus-search;quick~com.crashinvaders.lml)
 
 
 
-# LibGDX utilities
-This repository contains various LibGDX extensions covering various features such as dependency injection, GUI building, networking and general utilities.
+# libGDX utilities
+This repository contains various libGDX extensions covering various features such as dependency injection, GUI building, networking and general utilities.
 
 ### Note
 This repository originally used to host only the `gdx-lml` library repository. The other libraries were merged into a single Gradle setup to ease maintenance and releases.
@@ -25,10 +25,10 @@ Also, this repository includes example projects using the latest snapshot versio
 ## Projects
 
 ### gdx-kiwi
-[Kiwi](kiwi) is a Guava-inspired set of utilities for pretty much any LibGDX-based application. It makes it easier to use LibGDX collections, assets and its API in general. While there are no `gdx-kiwi`-specific test projects, most of examples use Kiwi utilities to handle heavy assets and collections.
+[Kiwi](kiwi) is a Guava-inspired set of utilities for pretty much any libGDX-based application. It makes it easier to use libGDX collections, assets and its API in general. While there are no `gdx-kiwi`-specific test projects, most of examples use Kiwi utilities to handle heavy assets and collections.
 
 ### gdx-lml
-[LML](lml) (*LibGDX Markup Language*) allows to parse HTML-like templates with FreeMarker-inspired macros into Scene2D actors. Since making your UI in Java can become unreadable and tedious thanks to this language's verbosity, LML can be a useful alternative. Especially since LML templates can be modified or reloaded without having to recompile the whole application. Comes with extra support for managing preferences, assets and internationalization.
+[LML](lml) (*libGDX Markup Language*) allows to parse HTML-like templates with FreeMarker-inspired macros into Scene2D actors. Since making your UI in Java can become unreadable and tedious thanks to this language's verbosity, LML can be a useful alternative. Especially since LML templates can be modified or reloaded without having to recompile the whole application. Comes with extra support for managing preferences, assets and internationalization.
 
 #### gdx-lml-vis
 [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) is a superb library, extending Scene2D with additional widgets and a modern skin. [LML Vis](lml-vis) allows to parse LML templates into VisUI widgets, instead of standard Scene2D ones and extends the syntax with ways to construct the new actors. Even if you want to have a custom skin in your application, consider using this library for the improved widgets.
@@ -46,10 +46,10 @@ Also, this repository includes example projects using the latest snapshot versio
 [Autumn GWT](autumn/natives/gwt) provides class scanner for GWT applications.
 
 ### gdx-autumn-mvc
-[Autumn MVC](mvc) is a model-view-controller framework on top of LibGDX. It uses **Autumn** to manage components and **LML** as view templates. Makes it easier to maintain assets, internationalization, preferences, music, screen transitions, and so on. While other libraries are rather general-purpose, this one forces its structure upon your application - but should be still worth it, considering the amount of things it handles for you.
+[Autumn MVC](mvc) is a model-view-controller framework on top of libGDX. It uses **Autumn** to manage components and **LML** as view templates. Makes it easier to maintain assets, internationalization, preferences, music, screen transitions, and so on. While other libraries are rather general-purpose, this one forces its structure upon your application - but should be still worth it, considering the amount of things it handles for you.
 
 ### gdx-websocket
-[LibGDX web sockets library](websocket) aims to extend the default `Net` implementations with cross-platform client-side web sockets. Rather than being a huge framework with server-side libraries, this set of libraries offers a simple and somewhat low level, yet pretty powerful client networking API.
+[libGDX web sockets library](websocket) aims to extend the default `Net` implementations with cross-platform client-side web sockets. Rather than being a huge framework with server-side libraries, this set of libraries offers a simple and somewhat low level, yet pretty powerful client networking API.
 
 #### gdx-websocket-common
 [Common web sockets library](websocket/natives/common) contains web socket natives for desktop and Android applications using high quality [nv-websocket-client](https://github.com/TakahikoKawasaki/nv-websocket-client) library.
@@ -58,17 +58,17 @@ Also, this repository includes example projects using the latest snapshot versio
 [GWT web sockets library](websocket/natives/gwt) contains web socket natives for GWT applications.
 
 #### gdx-websocket-serialization
-[Serialization library for LibGDX web sockets](websocket/natives/serialization) contains serialization mechanism that works on every LibGDX platform. While default object serialization (using LibGDX `Json` API, based on reflection) is fine for most project, some performance-critical applications might require a different solution. Since most popular and tested serialization libraries are rarely GWT-compatible, `gdx-websocket` comes with its own alternative - this library. Warning: JSON-based communication is much easier to use, switch to this serialization only when necessary.
+[Serialization library for libGDX web sockets](websocket/natives/serialization) contains serialization mechanism that works on every libGDX platform. While default object serialization (using libGDX `Json` API, based on reflection) is fine for most project, some performance-critical applications might require a different solution. Since most popular and tested serialization libraries are rarely GWT-compatible, `gdx-websocket` comes with its own alternative - this library. Warning: JSON-based communication is much easier to use, switch to this serialization only when necessary.
 
 ### Examples
 See [examples section](examples) to check out some simple applications using presented libraries.
 
 ### Other projects
-Other LibGDX-related projects include:
-- [gdx-setup](https://github.com/czyzby/gdx-setup): an alternative to the current project generator created using LibGDX and Kotlin. Collaboration with [@kotcrab](https://github.com/kotcrab).
-- [ktx](https://github.com/czyzby/ktx): utilities for LibGDX application written in [Kotlin](https://kotlinlang.org/). Features a [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) module by [@kotcrab](https://github.com/kotcrab).
-- [gdx-skins](https://github.com/czyzby/gdx-skins): aims to help beginners with setting up their GUI in LibGDX using *Scene2D*. Contains some free GUI themes.
-- [Noise4J](https://github.com/czyzby/noise4j): a couple of simple map generators. Written with LibGDX in mind, but the code itself has no dependencies - this is a pure Java 6 library, compatible with GWT. Lightweight. Can be used in pretty much any Java project.
+Other libGDX-related projects include:
+- [gdx-setup](https://github.com/czyzby/gdx-setup): an alternative to the current project generator created using libGDX and Kotlin. Collaboration with [@kotcrab](https://github.com/kotcrab).
+- [ktx](https://github.com/czyzby/ktx): utilities for libGDX application written in [Kotlin](https://kotlinlang.org/). Features a [VisUI](https://github.com/kotcrab/VisEditor/wiki/VisUI) module by [@kotcrab](https://github.com/kotcrab).
+- [gdx-skins](https://github.com/czyzby/gdx-skins): aims to help beginners with setting up their GUI in libGDX using *Scene2D*. Contains some free GUI themes.
+- [Noise4J](https://github.com/czyzby/noise4j): a couple of simple map generators. Written with libGDX in mind, but the code itself has no dependencies - this is a pure Java 6 library, compatible with GWT. Lightweight. Can be used in pretty much any Java project.
 - [vis-ui-contrib](https://github.com/kotcrab/vis-ui-contrib): contains some **VisUI** utilities and skins that I've created and made public. Note that the project itself in maintained by [@kotcrab](https://github.com/kotcrab), the creator of **VisUI**.
 
 ## Dependencies
@@ -76,14 +76,14 @@ All libraries follow the same schema:
 ```groovy
 api "com.crashinvaders.lml:lib-name:$libVersion.$gdxVersion"
 ```
-`lib-name` is the name of the library (one of the ones listed above). `libVersion` follows `MAJOR.MINOR` schema and is the actual version of the library. `gdxVersion` is the version of the LibGDX library used to build the archive. For example, this is a valid LML dependency:
+`lib-name` is the name of the library (one of the ones listed above). `libVersion` follows `MAJOR.MINOR` schema and is the actual version of the library. `gdxVersion` is the version of the libGDX library used to build the archive. For example, this is a valid LML dependency:
 ```groovy
 api 'com.crashinvaders.lml:gdx-lml:1.10.1.12.0'
 ```
 To find out the current version ID and GWT module, check out the specific library's `README` file. Looking through [Maven Central](http://search.maven.org/#search|ga|1|g%3A%22com.crashinvaders.lml%22) might also help.
 
 ## Working with the sources
-Clone this repository. The whole setup is Gradle-based, with very similar structure to default LibGDX projects generated with `gdx-setup`. Note that Gradle wrapper is not included in the root project, so you should have Gradle installed locally.
+Clone this repository. The whole setup is Gradle-based, with very similar structure to default libGDX projects generated with `gdx-setup`. Note that Gradle wrapper is not included in the root project, so you should have Gradle installed locally.
 
 To deploy the libs, the project requires some additional "secret" properties, used for archives signing and logging to Maven Central. While most likely you will not need these functionalities, Gradle still forces you to provide these properties. A default unfilled `gradle.properties` file is available in the root folder, so Gradle will not complain about missing properties. However, eventually you might want to fill these in your Gradle home folder:
 ```
@@ -96,7 +96,7 @@ To deploy the libs, the project requires some additional "secret" properties, us
 ```
 Note that deploying to Maven Local does *not* require the signing task, so if you just keep the signing properties commented out - you should be fine. Try running `gradle installAll` to check if deploying to Maven Local works.
 
-Before pulling any requests, make sure your code is formatted with `eclipse-formatter.xml` (or its equivalent for other IDE). Note that this is *not* the official LibGDX code formatter, as I'm not really a huge fan of its setup.
+Before pulling any requests, make sure your code is formatted with `eclipse-formatter.xml` (or its equivalent for other IDE). Note that this is *not* the official libGDX code formatter, as I'm not really a huge fan of its setup.
 
 Assuming you want to use Eclipse IDE (which is IMHO much better for managing multiple projects than IntelliJ thanks to its workspaces, working sets and whatnot), this is a simple list of stuff to do after repository cloning:
 
