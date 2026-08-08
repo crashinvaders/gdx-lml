@@ -403,19 +403,6 @@ public class Strings extends UtilitiesClass {
     }
 
     /** @param stringBuilder will have its length set as 0. Cannot be null. */
-    public static void clearBuilder(final com.badlogic.gdx.utils.StringBuilder stringBuilder) {
-        stringBuilder.setLength(0);
-    }
-
-    /** @param stringBuilder will have its length set as 0. Cannot be null.
-     * @return value previously stored in the builder. */
-    public static String getAndClear(final com.badlogic.gdx.utils.StringBuilder stringBuilder) {
-        final String value = stringBuilder.toString();
-        clearBuilder(stringBuilder);
-        return value;
-    }
-
-    /** @param stringBuilder will have its length set as 0. Cannot be null. */
     public static void clearBuilder(final StringBuilder stringBuilder) {
         stringBuilder.setLength(0);
     }

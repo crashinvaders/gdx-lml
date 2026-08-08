@@ -54,6 +54,11 @@ public class ExtendedNet implements Net {
     }
 
     @Override
+    public boolean isHttpRequestPending(final HttpRequest httpRequest) {
+        return net.isHttpRequestPending(httpRequest);
+    }
+
+    @Override
     public ServerSocket newServerSocket(final Protocol protocol, final String hostname, final int port,
             final ServerSocketHints hints) {
         return net.newServerSocket(protocol, hostname, port, hints);

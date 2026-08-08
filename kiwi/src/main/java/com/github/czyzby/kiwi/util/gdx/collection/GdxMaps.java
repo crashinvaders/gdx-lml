@@ -130,7 +130,11 @@ public class GdxMaps extends UtilitiesClass {
      * @param <Key> type of map keys.
      * @param <Value> type of map values. */
     public static <Key, Value> ArrayMap<Key, Value> newArrayMap(final ArrayMap<? extends Key, ? extends Value> map) {
-        return new ArrayMap<Key, Value>(map);
+        final ArrayMap<Key, Value> result = new ArrayMap<Key, Value>(map.ordered, map.size);
+        for (int index = 0; index < map.size; index++) {
+            result.put(map.getKeyAt(index), map.getValueAt(index));
+        }
+        return result;
     }
 
     /** @param ordered if true, map will be ordered.
