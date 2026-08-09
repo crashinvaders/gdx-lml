@@ -34,10 +34,11 @@ allprojects {
 /** Checks if the property exists and if not tries to resolve it from the environment variable. */
 void resolveProperty(String propertyName, String envVariableName) {
     if (!project.hasProperty(propertyName)) {
-        project.ext.propertyName = System.getenv(envVariableName)
-        if (!project.ext.propertyName) {
+        def value = System.getenv(envVariableName)
+        if (!value) {
             println "$propertyName is not defined"
         } else {
+            project.ext.set(propertyName, value)
             println "$propertyName has been set from an environment variable."
         }
     }
@@ -166,7 +167,7 @@ configure(allLibModules) {
                 repositories {
                     maven {
                         def urlRelease = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-                        def urlSnapshot = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+                        def urlSnapshot = 'https://central.sonatype.com/repository/maven-snapshots/'
                         url = isSnapshot ? urlSnapshot : urlRelease
                         credentials {
                             username ossrhUsername
