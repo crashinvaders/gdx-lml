@@ -495,3 +495,11 @@ task installAll {
         dependsOn project.publishToMavenLocal
     }
 }
+
+apply from: 'gradle/github-release.gradle'
+
+githubReleaseDraft {
+    githubRepository = 'crashinvaders/gdx-lml'
+    mavenGroup = projectGroup
+    artifactIds = allLibModules.collect { it.findProperty('projectName') }.sort()
+}
