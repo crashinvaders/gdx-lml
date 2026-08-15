@@ -1,13 +1,11 @@
 # Disclaimer
 
-This is a fork of the archived [gdx-lml](https://github.com/czyzby/gdx-lml) project.
-It's meant to be **compatible with the latest libGDX version**,
-is currently **in maintanance mode** and there are **no plans for further development**.
+This is a fork of the archived [gdx-lml](https://github.com/czyzby/gdx-lml) project, maintained for compatibility with the latest libGDX release.
+It is in **maintenance mode**; no new features are planned.
 
-You're welcome to submit bug issues and improvement PRs. 
-Please be aware that feature requests most likely will be denied, unless they can really impress me :slightly_smiling_face:
+Bug reports and improvement PRs are welcome. Feature requests will generally be declined unless there is a compelling case.
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.crashinvaders.lml/gdx-lml.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.crashinvaders.lml/gdx-lml)
+[![Maven Central](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fcom%2Fcrashinvaders%2Flml%2Fgdx-lml%2Fmaven-metadata.xml&query=%2Fmetadata%2Fversioning%2Frelease&label=Maven%20Central)](https://central.sonatype.com/artifact/com.crashinvaders.lml/gdx-lml)
 [![libGDX](https://img.shields.io/badge/libgdx-1.14.2-green.svg)](https://libgdx.com/)
 
 
