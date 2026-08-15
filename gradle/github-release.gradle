@@ -18,7 +18,8 @@ import java.util.regex.Pattern
  *
  * Defaults: v<version> tags, CHANGES.md sections headed ## <version>, and main/sources/javadoc JARs.
  * Override tagPattern, versionFromTag, releaseNotesProvider, releaseTitle, classifiers, or
- * mavenRepositoryUrl when the target project uses different conventions.
+ * mavenRepositoryUrl when the target project uses different conventions. Use
+ * artifactExtensions for modules whose primary artifact is not a JAR (such as Android AARs).
  *
  * Tasks: previewGitHubRelease (local metadata), verifyGitHubRelease (remote checks),
  * and draftGitHubRelease (downloads Maven assets and creates a GitHub draft).
@@ -33,6 +34,7 @@ class GitHubReleaseDraftExtension {
     String mavenGroup
     List<String> artifactIds = []
     List<String> classifiers = ['', 'sources', 'javadoc']
+    Map<String, String> artifactExtensions = [:]
     File changelogFile
     Closure<String> versionFromTag = { tag -> tag.startsWith('v') ? tag.substring(1) : tag }
     Closure<Map<String, String>> releaseNotesProvider = { file, version ->
@@ -102,7 +104,8 @@ def prepareReleaseMetadata = {
     def artifacts = config.artifactIds.collectMany { artifactId ->
         config.classifiers.collect { classifier ->
             def classifierSuffix = classifier ? "-${classifier}" : ''
-            def fileName = "${artifactId}-${version}${classifierSuffix}.jar"
+            def extension = classifier ? 'jar' : (config.artifactExtensions[artifactId] ?: 'jar')
+            def fileName = "${artifactId}-${version}${classifierSuffix}.${extension}"
             [fileName: fileName, artifactUrl: "${config.mavenRepositoryUrl}/${groupPath}/${artifactId}/${version}/${fileName}"]
         }
     }

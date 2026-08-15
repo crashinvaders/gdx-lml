@@ -502,4 +502,6 @@ githubReleaseDraft {
     githubRepository = 'crashinvaders/gdx-lml'
     mavenGroup = projectGroup
     artifactIds = allLibModules.collect { it.findProperty('projectName') }.sort()
+    artifactExtensions = libAndroidModules.collectEntries { [(it.findProperty('projectName')): 'aar'] }
+    releaseTitle = { metadata -> metadata.tag }
 }
