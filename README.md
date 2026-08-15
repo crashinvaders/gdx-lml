@@ -111,13 +111,9 @@ Assuming you want to use Eclipse IDE (which is IMHO much better for managing mul
 - `gradle idea` - generates IntelliJ project structure.
 - `gradle build install` - builds the libraries' archives and pushes them to Maven Local.
 - `gradle installAll` - same as the previous one, but the tasks are always invoked in the correct order. Use when changing libraries' versions to avoid missing artifacts errors.
-- `./gradlew publishAll` - uploads signed release artifacts to the Central Portal staging API. It does not release them.
-- `./gradlew submitReleaseToCentralPortal` - submits the uploaded release for Portal validation. Run immediately after `publishAll`, from the same IP. Review and release the validated deployment in the [Central Portal](https://central.sonatype.com/publishing).
-- `./gradlew submitReleaseToCentralPortal -PcentralPublishingType=automatic` - submits and automatically releases after Portal validation. Use only for an approved final release.
-- `./gradlew checkCentralPortalStaging` - lists staging repositories for recovery or status checks. Does not change remote state.
-- `./gradlew dropCentralPortalStaging -PcentralStagingRepositoryKey=<key>` - deletes an incomplete open staging repository.
 - `./gradlew prepareCentralBundle` - creates a signed, checksummed multi-module bundle for Central Publisher API upload.
-- `./gradlew uploadCentralBundle` - uploads that bundle and requests automatic publishing after validation.
+- `./gradlew uploadCentralBundle` - uploads that bundle through the Central Publisher API and requests automatic publishing after validation. Requires `curl`.
+- `./gradlew publishAll` - disabled. The Central OSSRH staging compatibility API stalled for this project; use `uploadCentralBundle`.
 - `gradle clean` - removes built archives.
 - `gradle distZip` - prepares a zip archive with all jars in `build/distributions` folder. Useful for releases.
 

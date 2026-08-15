@@ -18,8 +18,6 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://s01.oss.sonatype.org/content/repositories/releases/" }
     }
 
     ext {
@@ -445,32 +443,36 @@ task uploadCentralBundle {
             throw new GradleException('Central Portal user-token credentials are required: ossrhUsername and ossrhPassword.')
         }
         def bundle = centralBundleFile.get().asFile
-        def boundary = "----GradleCentral${System.currentTimeMillis()}"
         def name = java.net.URLEncoder.encode("gdx-lml-${libVersion}", 'UTF-8')
-        def connection = new URL("https://central.sonatype.com/api/v1/publisher/upload?name=${name}&publishingType=AUTOMATIC").openConnection() as HttpURLConnection
-        connection.connectTimeout = 30000
-        connection.readTimeout = 120000
-        connection.requestMethod = 'POST'
-        connection.doOutput = true
-        connection.setRequestProperty('Authorization', "Bearer ${"${username}:${password}".getBytes('UTF-8').encodeBase64()}")
-        connection.setRequestProperty('Content-Type', "multipart/form-data; boundary=${boundary}")
-        def header = "--${boundary}\\r\\nContent-Disposition: form-data; name=\\\"bundle\\\"; filename=\\\"${bundle.name}\\\"\\r\\nContent-Type: application/octet-stream\\r\\n\\r\\n".getBytes('UTF-8')
-        def footer = "\\r\\n--${boundary}--\\r\\n".getBytes('UTF-8')
-        connection.setFixedLengthStreamingMode(header.length + bundle.length() + footer.length)
-        connection.outputStream.withCloseable { output ->
-            output.write(header)
-            bundle.withInputStream { input -> input.transferTo(output) }
-            output.write(footer)
+        def token = "${username}:${password}".getBytes('UTF-8').encodeBase64().toString()
+        def response = new ByteArrayOutputStream()
+        def curlConfig = """url = \"https://central.sonatype.com/api/v1/publisher/upload?name=${name}&publishingType=AUTOMATIC\"
+header = \"Authorization: Bearer ${token}\"
+form = \"bundle=@${bundle.absolutePath};type=application/octet-stream\"
+"""
+        def result = exec {
+            executable 'curl'
+            args '--config', '-', '--fail-with-body', '--silent', '--show-error', '--connect-timeout', '30', '--max-time', '180'
+            standardInput = new ByteArrayInputStream(curlConfig.getBytes('UTF-8'))
+            standardOutput = response
+            errorOutput = response
+            ignoreExitValue = true
         }
-        def status = connection.responseCode
-        def stream = status >= 400 ? connection.errorStream : connection.inputStream
-        def response = stream ? stream.getText('UTF-8').trim() : ''
-        if (status < 200 || status >= 300) {
-            throw new GradleException("Central bundle upload failed (HTTP ${status}): ${response}")
+        if (result.exitValue != 0) {
+            throw new GradleException("Central bundle upload failed: ${response.toString('UTF-8').trim()}")
         }
-        file("${buildDir}/central-deployment-id.txt").text = response
-        println "Central deployment accepted: ${response}"
+        def deploymentId = response.toString('UTF-8').trim()
+        file("${buildDir}/central-deployment-id.txt").text = deploymentId
+        println "Central deployment accepted: ${deploymentId}"
     }
+}
+
+// Central's OSSRH staging compatibility API stalled repeatedly for this project.
+// Keep task names as explicit safeguards so a future release cannot accidentally use it.
+publishAll.setDependsOn([])
+publishAll.description = 'Disabled: use uploadCentralBundle for Central releases.'
+publishAll.doLast {
+    throw new GradleException('publishAll is disabled. Use uploadCentralBundle instead.')
 }
 
 task publishAllSnapshots {
