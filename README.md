@@ -7,8 +7,8 @@ is currently **in maintanance mode** and there are **no plans for further develo
 You're welcome to submit bug issues and improvement PRs. 
 Please be aware that feature requests most likely will be denied, unless they can really impress me :slightly_smiling_face:
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.crashinvaders.lml/gdx-lml.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.crashinvaders.lml%22%20AND%20a:%22gdx-lml%22)
-[![libGDX](https://img.shields.io/badge/libgdx-1.14.2-red.svg)](https://libgdx.com/)
+[![Maven Central](https://img.shields.io/maven-central/v/com.crashinvaders.lml/gdx-lml.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.crashinvaders.lml/gdx-lml)
+[![libGDX](https://img.shields.io/badge/libgdx-1.14.2-green.svg)](https://libgdx.com/)
 
 
 
@@ -80,7 +80,7 @@ api "com.crashinvaders.lml:lib-name:$libVersion.$gdxVersion"
 ```groovy
 api 'com.crashinvaders.lml:gdx-lml:1.10.1.14.2'
 ```
-To find out the current version ID and GWT module, check out the specific library's `README` file. Looking through [Maven Central](http://search.maven.org/#search|ga|1|g%3A%22com.crashinvaders.lml%22) might also help.
+To find out the current version ID and GWT module, check out the specific library's `README` file. The [gdx-lml Maven Central page](https://central.sonatype.com/artifact/com.crashinvaders.lml/gdx-lml) might also help.
 
 ## Working with the sources
 Clone this repository. The whole setup is Gradle-based, with very similar structure to default libGDX projects generated with `gdx-setup`. Note that Gradle wrapper is not included in the root project, so you should have Gradle installed locally.
