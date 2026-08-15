@@ -85,7 +85,7 @@ To find out the current version ID and GWT module, check out the specific librar
 ## Working with the sources
 Clone this repository. The whole setup is Gradle-based, with very similar structure to default libGDX projects generated with `gdx-setup`. Note that Gradle wrapper is not included in the root project, so you should have Gradle installed locally.
 
-To deploy the libs, the project requires some additional "secret" properties, used for archives signing and logging to Maven Central. While most likely you will not need these functionalities, Gradle still forces you to provide these properties. A default unfilled `gradle.properties` file is available in the root folder, so Gradle will not complain about missing properties. However, eventually you might want to fill these in your Gradle home folder:
+To publish a release, the project requires signing credentials and a [Central Portal user token](https://central.sonatype.com/usertoken). Keep them in your user-level Gradle properties file or provide `OSSRH_USERNAME` and `OSSRH_PASSWORD` environment variables; do not commit them. The legacy `ossrh` property names remain for compatibility:
 ```
         signing.keyId= 
         signing.password= 
@@ -111,10 +111,15 @@ Assuming you want to use Eclipse IDE (which is IMHO much better for managing mul
 - `gradle idea` - generates IntelliJ project structure.
 - `gradle build install` - builds the libraries' archives and pushes them to Maven Local.
 - `gradle installAll` - same as the previous one, but the tasks are always invoked in the correct order. Use when changing libraries' versions to avoid missing artifacts errors.
-- `gradle uploadArchives` - pushes the archives to Maven Central. Requires proper `gradle.properties` with signing and logging data.
+- `./gradlew publishAll` - uploads signed release artifacts to the Central Portal staging API. It does not release them.
+- `./gradlew submitReleaseToCentralPortal` - submits the uploaded release for Portal validation. Run immediately after `publishAll`, from the same IP. Review and release the validated deployment in the [Central Portal](https://central.sonatype.com/publishing).
+- `./gradlew submitReleaseToCentralPortal -PcentralPublishingType=automatic` - submits and automatically releases after Portal validation. Use only for an approved final release.
+- `./gradlew checkCentralPortalStaging` - lists staging repositories for recovery or status checks. Does not change remote state.
+- `./gradlew dropCentralPortalStaging -PcentralStagingRepositoryKey=<key>` - deletes an incomplete open staging repository.
+- `./gradlew prepareCentralBundle` - creates a signed, checksummed multi-module bundle for Central Publisher API upload.
+- `./gradlew uploadCentralBundle` - uploads that bundle and requests automatic publishing after validation.
 - `gradle clean` - removes built archives.
 - `gradle distZip` - prepares a zip archive with all jars in `build/distributions` folder. Useful for releases.
-- `gradle closeAndPromoteRepository` - closes and promotes Nexus repository. Run after `uploadArchives`.
 
 Additionally, in `examples` directory you can find a utility Gradle project. This is *not* the root project of example applications: they are all autonomous and can be copied outside the repository (and should still work!). Still, it contains some utility tasks that modify or test example projects en masse:
 

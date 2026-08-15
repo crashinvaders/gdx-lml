@@ -26,7 +26,7 @@ allprojects {
         projectGroup = 'com.crashinvaders.lml'
         projectVersion = '1.10'
         gdxVersion = '1.14.2'
-        isSnapshot = true
+        isSnapshot = false
         libVersion = "$projectVersion.$gdxVersion${isSnapshot ? '-SNAPSHOT' : ''}"
     }
 }
@@ -43,9 +43,9 @@ void resolveProperty(String propertyName, String envVariableName) {
         }
     }
 }
-// Setup Nexus repo credentials.
-// They usually defined in user global gradle.properties file
-// or as environment variables (Travis-CI).
+// Setup Central Portal user-token credentials. Define these in the user-level
+// Gradle properties file or provide OSSRH_USERNAME and OSSRH_PASSWORD.
+// The property names are retained for compatibility with existing local setup.
 resolveProperty('ossrhUsername', 'OSSRH_USERNAME')
 resolveProperty('ossrhPassword', 'OSSRH_PASSWORD')
 
@@ -166,7 +166,7 @@ configure(allLibModules) {
             publishing {
                 repositories {
                     maven {
-                        def urlRelease = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                        def urlRelease = 'https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/'
                         def urlSnapshot = 'https://central.sonatype.com/repository/maven-snapshots/'
                         url = isSnapshot ? urlSnapshot : urlRelease
                         credentials {
@@ -206,12 +206,12 @@ configure(allLibModules) {
                         pom {
                             name = projectName
                             description = projectDesc
-                            url = 'http://github.com/crashinvaders/gdx-lml'
+                            url = 'https://github.com/crashinvaders/gdx-lml'
 
                             licenses {
                                 license {
                                     name = 'The Apache License, Version 2.0'
-                                    url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                                    url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                                 }
                             }
 
@@ -231,7 +231,7 @@ configure(allLibModules) {
                             scm {
                                 connection = 'scm:git:git://github.com:crashinvaders/gdx-lml.git'
                                 developerConnection = 'scm:git:git@github.com:crashinvaders/gdx-lml.git'
-                                url = 'http://github.com/crashinvaders/gdx-lml'
+                                url = 'https://github.com/crashinvaders/gdx-lml'
                             }
                         }
                     }
@@ -263,11 +263,213 @@ configure(allLibModules) {
 
 task publishAll {
     group 'gdx-lml'
-    description 'Publish all the Maven artifacts to the public repos.'
+    description 'Upload all release artifacts to the Central Portal staging API. Does not release them.'
 
     allLibModules.forEach {project ->
         dependsOn project.build
         dependsOn project.publish
+    }
+}
+
+task submitReleaseToCentralPortal {
+    group 'gdx-lml'
+    description 'Submit an uploaded release to the Central Portal. Set -PcentralPublishingType=automatic to release after validation.'
+
+    onlyIf { !isSnapshot }
+
+    doLast {
+        def username = findProperty('ossrhUsername')
+        def password = findProperty('ossrhPassword')
+        if (!username || !password) {
+            throw new GradleException('Central Portal user-token credentials are required: ossrhUsername and ossrhPassword.')
+        }
+
+        def namespace = projectGroup
+        def publishingType = findProperty('centralPublishingType') ?: 'user_managed'
+        if (!(publishingType in ['user_managed', 'automatic', 'portal_api'])) {
+            throw new GradleException("Unsupported centralPublishingType '${publishingType}'. Use user_managed, automatic, or portal_api.")
+        }
+        def endpoint = "https://ossrh-staging-api.central.sonatype.com/manual/upload/defaultRepository/${namespace}?publishing_type=${publishingType}"
+        def connection = new URL(endpoint).openConnection() as HttpURLConnection
+        def token = "${username}:${password}".getBytes('UTF-8').encodeBase64().toString()
+        connection.connectTimeout = 30000
+        connection.readTimeout = 30000
+        connection.requestMethod = 'POST'
+        connection.doOutput = true
+        connection.setRequestProperty('Authorization', "Bearer ${token}")
+        connection.setRequestProperty('Content-Length', '0')
+
+        def status = connection.responseCode
+        def stream = status >= 400 ? connection.errorStream : connection.inputStream
+        def response = stream ? stream.getText('UTF-8') : ''
+        if (status < 200 || status >= 300) {
+            throw new GradleException("Central Portal submission failed (HTTP ${status}): ${response}")
+        }
+        println "Central Portal ${publishingType} submission accepted for ${namespace}: ${response}"
+    }
+}
+
+task checkCentralPortalStaging {
+    group 'gdx-lml'
+    description 'List Central Portal staging repositories for this namespace. Does not modify remote state.'
+
+    doLast {
+        def username = findProperty('ossrhUsername')
+        def password = findProperty('ossrhPassword')
+        if (!username || !password) {
+            throw new GradleException('Central Portal user-token credentials are required: ossrhUsername and ossrhPassword.')
+        }
+
+        def namespace = projectGroup
+        def endpoint = "https://ossrh-staging-api.central.sonatype.com/manual/search/repositories?ip=any&profile_id=${namespace}"
+        def connection = new URL(endpoint).openConnection() as HttpURLConnection
+        def token = "${username}:${password}".getBytes('UTF-8').encodeBase64().toString()
+        connection.connectTimeout = 30000
+        connection.readTimeout = 30000
+        connection.requestMethod = 'GET'
+        connection.setRequestProperty('Authorization', "Bearer ${token}")
+
+        def status = connection.responseCode
+        def stream = status >= 400 ? connection.errorStream : connection.inputStream
+        def response = stream ? stream.getText('UTF-8') : ''
+        if (status < 200 || status >= 300) {
+            throw new GradleException("Central Portal staging lookup failed (HTTP ${status}): ${response}")
+        }
+        println response
+    }
+}
+
+task dropCentralPortalStaging {
+    group 'gdx-lml'
+    description 'Delete an open Central Portal staging repository. Requires -PcentralStagingRepositoryKey=<key>.'
+
+    doLast {
+        def username = findProperty('ossrhUsername')
+        def password = findProperty('ossrhPassword')
+        def repositoryKey = findProperty('centralStagingRepositoryKey')
+        if (!username || !password) {
+            throw new GradleException('Central Portal user-token credentials are required: ossrhUsername and ossrhPassword.')
+        }
+        if (!repositoryKey) {
+            throw new GradleException('centralStagingRepositoryKey is required.')
+        }
+
+        def endpoint = "https://ossrh-staging-api.central.sonatype.com/manual/drop/repository/${repositoryKey}"
+        def connection = new URL(endpoint).openConnection() as HttpURLConnection
+        def token = "${username}:${password}".getBytes('UTF-8').encodeBase64().toString()
+        connection.connectTimeout = 30000
+        connection.readTimeout = 30000
+        connection.requestMethod = 'DELETE'
+        connection.setRequestProperty('Authorization', "Bearer ${token}")
+
+        def status = connection.responseCode
+        def stream = status >= 400 ? connection.errorStream : connection.inputStream
+        def response = stream ? stream.getText('UTF-8') : ''
+        if (status < 200 || status >= 300) {
+            throw new GradleException("Central Portal staging drop failed (HTTP ${status}): ${response}")
+        }
+        println "Central Portal staging repository dropped: ${repositoryKey}"
+    }
+}
+
+def centralBundleDir = layout.buildDirectory.dir('central-bundle')
+def centralBundleFile = layout.buildDirectory.file("distributions/gdx-lml-${libVersion}-central.zip")
+
+task prepareCentralBundle {
+    group 'gdx-lml'
+    description 'Create a signed, checksummed Maven-layout bundle for the Central Publisher API.'
+    dependsOn { allLibModules.collect { it.tasks.getByName('signMavenJavaPublication') } }
+
+    doLast {
+        def stagingDir = centralBundleDir.get().asFile
+        delete stagingDir
+        stagingDir.mkdirs()
+
+        allLibModules.each { module ->
+            def publication = module.publishing.publications.mavenJava
+            def artifactDir = new File(stagingDir, "${publication.groupId.replace('.', '/')}/${publication.artifactId}/${publication.version}")
+            artifactDir.mkdirs()
+            def copyFile = { File source, String name ->
+                copy {
+                    from source
+                    into artifactDir
+                    rename { name }
+                }
+                def signature = new File(source.absolutePath + '.asc')
+                if (!signature.isFile()) {
+                    throw new GradleException("Missing signature for ${source}")
+                }
+                copy {
+                    from signature
+                    into artifactDir
+                    rename { "${name}.asc" }
+                }
+            }
+
+            publication.artifacts.each { artifact ->
+                def classifier = artifact.classifier ? "-${artifact.classifier}" : ''
+                copyFile(artifact.file, "${publication.artifactId}-${publication.version}${classifier}.${artifact.extension}")
+            }
+
+            def pom = module.layout.buildDirectory.file('publications/mavenJava/pom-default.xml').get().asFile
+            copyFile(pom, "${publication.artifactId}-${publication.version}.pom")
+            def moduleMetadata = module.layout.buildDirectory.file('publications/mavenJava/module.json').get().asFile
+            if (moduleMetadata.isFile()) {
+                copyFile(moduleMetadata, "${publication.artifactId}-${publication.version}.module")
+            }
+        }
+
+        fileTree(stagingDir).matching { exclude '**/*.md5', '**/*.sha1', '**/*.sha256', '**/*.sha512' }.files.each { file ->
+            ['MD5': 'md5', 'SHA-1': 'sha1', 'SHA-256': 'sha256', 'SHA-512': 'sha512'].each { algorithm, extension ->
+                def digest = java.security.MessageDigest.getInstance(algorithm).digest(file.bytes).encodeHex().toString()
+                new File(file.parentFile, "${file.name}.${extension}").text = digest
+            }
+        }
+
+        def bundle = centralBundleFile.get().asFile
+        bundle.parentFile.mkdirs()
+        ant.zip(destfile: bundle, basedir: stagingDir)
+        println "Central bundle created: ${bundle}"
+    }
+}
+
+task uploadCentralBundle {
+    group 'gdx-lml'
+    description 'Upload the prepared bundle to Central and automatically release it after validation.'
+    dependsOn prepareCentralBundle
+
+    doLast {
+        def username = findProperty('ossrhUsername')
+        def password = findProperty('ossrhPassword')
+        if (!username || !password) {
+            throw new GradleException('Central Portal user-token credentials are required: ossrhUsername and ossrhPassword.')
+        }
+        def bundle = centralBundleFile.get().asFile
+        def boundary = "----GradleCentral${System.currentTimeMillis()}"
+        def name = java.net.URLEncoder.encode("gdx-lml-${libVersion}", 'UTF-8')
+        def connection = new URL("https://central.sonatype.com/api/v1/publisher/upload?name=${name}&publishingType=AUTOMATIC").openConnection() as HttpURLConnection
+        connection.connectTimeout = 30000
+        connection.readTimeout = 120000
+        connection.requestMethod = 'POST'
+        connection.doOutput = true
+        connection.setRequestProperty('Authorization', "Bearer ${"${username}:${password}".getBytes('UTF-8').encodeBase64()}")
+        connection.setRequestProperty('Content-Type', "multipart/form-data; boundary=${boundary}")
+        def header = "--${boundary}\\r\\nContent-Disposition: form-data; name=\\\"bundle\\\"; filename=\\\"${bundle.name}\\\"\\r\\nContent-Type: application/octet-stream\\r\\n\\r\\n".getBytes('UTF-8')
+        def footer = "\\r\\n--${boundary}--\\r\\n".getBytes('UTF-8')
+        connection.setFixedLengthStreamingMode(header.length + bundle.length() + footer.length)
+        connection.outputStream.withCloseable { output ->
+            output.write(header)
+            bundle.withInputStream { input -> input.transferTo(output) }
+            output.write(footer)
+        }
+        def status = connection.responseCode
+        def stream = status >= 400 ? connection.errorStream : connection.inputStream
+        def response = stream ? stream.getText('UTF-8').trim() : ''
+        if (status < 200 || status >= 300) {
+            throw new GradleException("Central bundle upload failed (HTTP ${status}): ${response}")
+        }
+        file("${buildDir}/central-deployment-id.txt").text = response
+        println "Central deployment accepted: ${response}"
     }
 }
 
