@@ -7,8 +7,8 @@ is currently **in maintanance mode** and there are **no plans for further develo
 You're welcome to submit bug issues and improvement PRs. 
 Please be aware that feature requests most likely will be denied, unless they can really impress me :slightly_smiling_face:
 
-[![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/com.crashinvaders.lml/gdx-lml?label=Stable&server=https%3A%2F%2Fs01.oss.sonatype.org&style=for-the-badge)](https://s01.oss.sonatype.org/#nexus-search;quick~com.crashinvaders.lml)
-[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.crashinvaders.lml/gdx-lml?server=https%3A%2F%2Fs01.oss.sonatype.org&label=snapshot&style=for-the-badge)](https://s01.oss.sonatype.org/#nexus-search;quick~com.crashinvaders.lml)
+[![Maven Central](https://img.shields.io/maven-central/v/com.crashinvaders.lml/gdx-lml.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.crashinvaders.lml%22%20AND%20a:%22gdx-lml%22)
+[![libGDX](https://img.shields.io/badge/libgdx-1.14.2-red.svg)](https://libgdx.com/)
 
 
 
