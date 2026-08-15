@@ -370,6 +370,13 @@ task dropCentralPortalStaging {
     }
 }
 
+// TODO Migrate off this hand-rolled bundle/upload code to the "com.vanniktech.maven.publish"
+//  plugin. It talks to the same native Central Publisher API these tasks reimplement here
+//  (bundling, checksums, signing, upload, auto-release), but as a maintained plugin instead
+//  of custom curl/HttpURLConnection scripting. Migrating is a real priority, not a
+//  someday-cleanup item.
+//  https://vanniktech.github.io/gradle-maven-publish-plugin/central/
+
 def centralBundleDir = layout.buildDirectory.dir('central-bundle')
 def centralBundleFile = layout.buildDirectory.file("distributions/gdx-lml-${libVersion}-central.zip")
 
